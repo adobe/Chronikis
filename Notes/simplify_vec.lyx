@@ -1,0 +1,1138 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Simplifying 
+\family typewriter
+vec
+\family default
+ expressions
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+copyright
+\end_layout
+
+\end_inset
+
+ 2019, Adobe Inc.
+ This document is licensed to you under the Apache License, Version 2.0.
+ You may obtain a copy of the license at 
+\begin_inset CommandInset href
+LatexCommand href
+name "http://www.apache.org/licenses/LICENSE-2.0"
+target "http://www.apache.org/licenses/LICENSE-2.0"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+Kevin S.
+ Van Horn
+\begin_inset Newline newline
+\end_inset
+
+Adobe Inc.
+\end_layout
+
+\begin_layout Section
+Definition of 
+\family typewriter
+vec
+\end_layout
+
+\begin_layout Standard
+In the following, 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ is the set of scalars (real numbers), 
+\begin_inset Formula $\mathbb{R}^{*}$
+\end_inset
+
+ is the set of vectors over 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+, 
+\begin_inset Formula $(v\circ w)$
+\end_inset
+
+ is the vector obtained by appending vectors 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $w$
+\end_inset
+
+, and 
+\begin_inset Formula $(s\colon v)$
+\end_inset
+
+ is the vector obtained by prepending scalar 
+\begin_inset Formula $s$
+\end_inset
+
+ to vector 
+\begin_inset Formula $v$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We define the function 
+\begin_inset Formula $\mathrm{vec}$
+\end_inset
+
+ as follows:
+\end_layout
+
+\begin_layout Enumerate
+The domain of 
+\begin_inset Formula $\mathrm{vec}$
+\end_inset
+
+ is all 
+\begin_inset Formula $n$
+\end_inset
+
+-tuples 
+\begin_inset Formula $\left(x_{1},\ldots,x_{n}\right)$
+\end_inset
+
+, 
+\begin_inset Formula $n\geq0$
+\end_inset
+
+, such that 
+\begin_inset Formula $x_{i}\in\mathbb{R}$
+\end_inset
+
+ or 
+\begin_inset Formula $x_{i}\in\mathbb{R}^{*}$
+\end_inset
+
+ for all 
+\begin_inset Formula $1\leq i\leq n$
+\end_inset
+
+.
+ The range is 
+\begin_inset Formula $\mathbb{R}^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $n\geq0$
+\end_inset
+
+, 
+\begin_inset Formula $s\in\mathbb{R}$
+\end_inset
+
+, and 
+\begin_inset Formula $v\in\mathbb{R}^{*}$
+\end_inset
+
+, then 
+\begin_inset Formula 
+\begin{align*}
+\mathrm{vec}() & =\mbox{the length-0 empty vector}\\
+\mathrm{vec}\left(s,x_{1},\ldots,x_{n}\right) & =s\colon\mathrm{vec}\left(x_{1},\ldots,x_{n}\right)\\
+\mathrm{vec}\left(v,x_{1},\ldots,x_{n}\right) & =v\circ\mathrm{vec}\left(x_{1},\ldots,x_{n}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Normal form 
+\end_layout
+
+\begin_layout Definition*
+An expression 
+\begin_inset Formula $v$
+\end_inset
+
+ is said to be 
+\emph on
+veckish
+\emph default
+ if it has the form 
+\begin_inset Formula $v=\mathrm{vec}\left(e_{1},\ldots,e_{n}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+An expression 
+\begin_inset Formula $\mathrm{vec}\left(e_{1},\ldots,e_{n}\right)$
+\end_inset
+
+ is 
+\emph on
+nullary
+\emph default
+ if 
+\begin_inset Formula $n=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+An expression 
+\begin_inset Formula $\mathrm{vec}\left(e_{1},\ldots,e_{n}\right)$
+\end_inset
+
+ is 
+\emph on
+element-normal
+\emph default
+ if 
+\begin_inset Formula $n>0$
+\end_inset
+
+ and 
+\begin_inset Formula $e_{i}\in\mathbb{R}$
+\end_inset
+
+ for all 
+\begin_inset Formula $1\leq i\leq n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+An expression 
+\begin_inset Formula $\mathrm{vec}\left(e_{1},\ldots,e_{n}\right)$
+\end_inset
+
+ is 
+\emph on
+quasi-append-normal
+\emph default
+ if
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+all 
+\begin_inset Formula $e_{i}\in\mathbb{R}^{*}$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Itemize
+any veckish 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ is element-normal, and
+\end_layout
+
+\begin_layout Itemize
+no two consecutive 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ are veckish.
+\end_layout
+
+\end_deeper
+\begin_layout Definition*
+It is 
+\emph on
+append-normal
+\emph default
+ if it is both quasi-append-normal and 
+\begin_inset Formula $n>1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+A veckish expression is in 
+\emph on
+normal form
+\emph default
+ if it is either nullary, element-normal, or append-normal.
+\end_layout
+
+\begin_layout Section
+Quasi-normal triples
+\end_layout
+
+\begin_layout Standard
+The simplification algorithm for veckish expressions is based on the idea
+ of a 
+\emph on
+quasi-normal triple
+\emph default
+, which is used to scan through the arguments of a veckish expression to
+ build a new, equivalent expression that is in normal form.
+\end_layout
+
+\begin_layout Definition*
+An expression 
+\begin_inset Formula $\mathrm{vec}\left(x_{1},\ldots,x_{n}\right)$
+\end_inset
+
+ is 
+\emph on
+scalar-initial
+\emph default
+ if 
+\begin_inset Formula $n\geq1$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ is either a scalar expression or a scalar-initial veckish expression.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+An expression 
+\begin_inset Formula $\mathrm{vec}\left(x_{1},\ldots,x_{n}\right)$
+\end_inset
+
+ is 
+\emph on
+scalar-final
+\emph default
+ if 
+\begin_inset Formula $n\geq1$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{n}$
+\end_inset
+
+ is either a scalar expression or a scalar-final veckish expression.
+\end_layout
+
+\begin_layout Proposition*
+If 
+\begin_inset Formula $n>0$
+\end_inset
+
+ and 
+\begin_inset Formula $u=\mathrm{vec}\left(x_{1},\ldots,x_{n}\right)$
+\end_inset
+
+ is quasi-append-normal then 
+\begin_inset Formula $u$
+\end_inset
+
+ is scalar-final iff 
+\begin_inset Formula $x_{n}$
+\end_inset
+
+ is element-normal.
+\end_layout
+
+\begin_layout Definition*
+A 
+\emph on
+quasi-normal triple
+\emph default
+ is a triple of veckish expressions 
+\begin_inset Formula $\left(u,v,w\right)$
+\end_inset
+
+ such that
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $u$
+\end_inset
+
+ is quasi-append-normal,
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $v$
+\end_inset
+
+ is nullary or element-normal,
+\end_layout
+
+\begin_layout Itemize
+if 
+\begin_inset Formula $u$
+\end_inset
+
+ is scalar-final then 
+\begin_inset Formula $v$
+\end_inset
+
+ is nullary and 
+\begin_inset Formula $w$
+\end_inset
+
+ is not scalar-initial.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+You can think of 
+\begin_inset Formula $u$
+\end_inset
+
+ as the result arguments we have already produced, 
+\begin_inset Formula $v$
+\end_inset
+
+ as an element-normal result argument we are in the process of constructing,
+ and 
+\begin_inset Formula $w$
+\end_inset
+
+ as the arguments we have not yet processed.
+\end_layout
+
+\begin_layout Definition*
+Two quasi-normal triples 
+\begin_inset Formula $a=\left(u,v,w\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $b=\left(u',v',w'\right)$
+\end_inset
+
+ are 
+\emph on
+equivalent
+\emph default
+, written 
+\begin_inset Formula $a\equiv b$
+\end_inset
+
+, if 
+\begin_inset Formula 
+\[
+u\circ v\circ w=u'\circ v'\circ w'.
+\]
+
+\end_inset
+
+Similarly, quasi-normal triple 
+\begin_inset Formula $\left(u,v,w\right)$
+\end_inset
+
+ is equivalent to expression 
+\begin_inset Formula $e$
+\end_inset
+
+ if 
+\begin_inset Formula $e=u\circ v\circ w$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In order to show that our algorithm terminates, we'll need to show that
+ some 
+\begin_inset Quotes eld
+\end_inset
+
+size
+\begin_inset Quotes erd
+\end_inset
+
+ metric decreases at each iteration.
+\end_layout
+
+\begin_layout Definition*
+The 
+\emph on
+vec-size
+\emph default
+ of an expression is defined by 
+\begin_inset Formula 
+\begin{align*}
+\mathrm{vsize}(e) & =1\quad\mbox{if }e\mbox{ is not veckish}\\
+\mathrm{vsize}\left(\mathrm{vec}\left(x_{1},\ldots,x_{n}\right)\right) & =1+\sum_{i=1}^{n}\mathrm{vsize}\left(x_{1}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+The 
+\emph on
+QNT-size 
+\emph default
+of a quasi-normal triple is defined by 
+\begin_inset Formula 
+\[
+\mathrm{qntsize}(u,v,w)=2\cdot\mathrm{vsize}(w)+\begin{cases}
+0 & \mbox{if }v\mbox{ is nullary}\\
+1 & \mbox{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+\begin_inset Formula $a\rightarrowtail b$
+\end_inset
+
+ (
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $a$
+\end_inset
+
+ reduces to 
+\begin_inset Formula $b$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+) means that
+\emph on
+ 
+\emph default
+if 
+\begin_inset Formula $a$
+\end_inset
+
+ is a quasi-normal triple, then 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $b$
+\end_inset
+
+ is a quasi-normal triple,
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $b\equiv a$
+\end_inset
+
+, and
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\mathrm{qntsize}(b)<\mathrm{qntsize}(a)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Definition*
+Our algorithm works by successively reducing a quasi-normal triple until
+ no further reduction is possible.
+ Here are the reductions we use.
+\end_layout
+
+\begin_layout Proposition
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:reductions"
+
+\end_inset
+
+The following reduction properties hold:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:w-has-scalar-first-arg"
+
+\end_inset
+
+If 
+\begin_inset Formula $s'$
+\end_inset
+
+ is a scalar expression then 
+\begin_inset Formula 
+\begin{gather*}
+\left(u,\,\mathrm{vec}\left(s_{1},\ldots,s_{m}\right),\,\mathrm{vec}\left(s',x_{1},\ldots,x_{n}\right)\right)\rightarrowtail\\
+\left(u,\mathrm{vec}\left(s_{1},\ldots,s_{m},s'\right),\mathrm{vec}\left(x_{1},\ldots,x_{n}\right)\right).
+\end{gather*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:w-has-veckish-first-arg"
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula 
+\begin{gather*}
+\left(u,\,v,\,\mathrm{vec}\left(\mathrm{vec}\left(y_{1},\ldots,y_{k}\right),x_{1},\ldots,x_{n}\right)\right)\rightarrowtail\\
+\left(u,\,v,\,\mathrm{vec}\left(y_{1},\ldots,y_{k},x_{1},\ldots,x_{n}\right)\right).
+\end{gather*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:v-not-nullary"
+
+\end_inset
+
+If 
+\begin_inset Formula $v$
+\end_inset
+
+is not nullary and 
+\begin_inset Formula $w$
+\end_inset
+
+ does not have a scalar or veckish first argument, then
+\begin_inset Formula 
+\begin{gather*}
+\left(\mathrm{vec}\left(y_{1},\ldots,y_{m}\right),\,v,\,w\right)\rightarrowtail\\
+\left(\mathrm{vec}\left(y_{1},\ldots,y_{m},v\right),\,\mathrm{vec}(),\,w\right).
+\end{gather*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:number-of-reductions"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:v-nullary"
+
+\end_inset
+
+If 
+\begin_inset Formula $y$
+\end_inset
+
+ is neither scalar nor veckish, then
+\begin_inset Formula 
+\begin{gather*}
+\left(\mathrm{vec}\left(v_{1},\ldots,v_{m}\right),\,\mathrm{vec}(),\,\mathrm{vec}\left(y,x_{1},\ldots,x_{n}\right)\right)\rightarrowtail\\
+\left(\mathrm{vec}\left(v_{1},\ldots,v_{m},y\right),\,\mathrm{vec}(),\,\mathrm{vec}\left(x_{1},\ldots,x_{n}\right)\right).
+\end{gather*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+We'll need to show that, on termination, we have a normal-form expression
+ equivalent to the original.
+ We'll use the following.
+\end_layout
+
+\begin_layout Proposition
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:termination"
+
+\end_inset
+
+If 
+\begin_inset Formula $(u,v,w)$
+\end_inset
+
+ is a quasi-normal triple that does not match any of reductions 1–
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:number-of-reductions"
+
+\end_inset
+
+, then both 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $w$
+\end_inset
+
+ are nullary, hence 
+\begin_inset Formula $\left(u,v,w\right)\equiv u$
+\end_inset
+
+.
+ Furthermore,
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+if 
+\begin_inset Formula $u$
+\end_inset
+
+ has exactly one argument 
+\begin_inset Formula $u'$
+\end_inset
+
+, so that 
+\begin_inset Formula $u=\mathrm{vec}\left(u'\right)$
+\end_inset
+
+, then 
+\begin_inset Formula $u'$
+\end_inset
+
+ is a vector expression that either is not veckish or is in normal form;
+\end_layout
+
+\begin_layout Itemize
+otherwise 
+\begin_inset Formula $u$
+\end_inset
+
+ is in normal form.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+As follows:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $w$
+\end_inset
+
+ does not have a scalar first argument (no match with reduction 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:w-has-scalar-first-arg"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $w$
+\end_inset
+
+ does not have a veckish first argument (no match with reduction 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:w-has-veckish-first-arg"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $v$
+\end_inset
+
+ is nullary (no match with reduction 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:v-not-nullary"
+
+\end_inset
+
+, and 
+\begin_inset Formula $w$
+\end_inset
+
+ has no scalar or veckish first argument).
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $w$
+\end_inset
+
+ is nullary (no match with reduction 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:v-nullary"
+
+\end_inset
+
+, 
+\begin_inset Formula $v$
+\end_inset
+
+ is nullary, 
+\begin_inset Formula $w$
+\end_inset
+
+ has no scalar or veckish first argument).
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $u$
+\end_inset
+
+ is nullary, then it is by definition in normal form.
+ If 
+\begin_inset Formula $u$
+\end_inset
+
+ has exactly one argument 
+\begin_inset Formula $u'$
+\end_inset
+
+, then since 
+\begin_inset Formula $u$
+\end_inset
+
+ is quasi-append-normal, 
+\begin_inset Formula $u'$
+\end_inset
+
+ is a vector expression that is either not veckish or is element-normal;
+ in the latter case 
+\begin_inset Formula $u'$
+\end_inset
+
+ is by definition in normal form.
+ If 
+\begin_inset Formula $u$
+\end_inset
+
+ has more than one argument then it is append-normal, and hence in normal
+ form.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Algorithm for simplifying veckish expressions
+\end_layout
+
+\begin_layout Standard
+Here is the algorithm:
+\end_layout
+
+\begin_layout Itemize
+Input: a veckish expression 
+\begin_inset Formula $e$
+\end_inset
+
+, all of whose arguments have either scalar or vector type.
+\end_layout
+
+\begin_layout Itemize
+Output: an expression 
+\begin_inset Formula $e'$
+\end_inset
+
+ equivalent to 
+\begin_inset Formula $e$
+\end_inset
+
+ which, if veckish, is in normal form.
+\end_layout
+
+\begin_layout Itemize
+Pseudocode:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $u$
+\end_inset
+
+ := vec(); 
+\begin_inset Formula $v$
+\end_inset
+
+ := vec(); 
+\begin_inset Formula $w$
+\end_inset
+
+ := 
+\begin_inset Formula $e$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout LyX-Code
+while 
+\begin_inset Formula $\left(u,v,w\right)$
+\end_inset
+
+ matches any of reductions 1--
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:number-of-reductions"
+
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+apply a matching reduction;
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+if 
+\begin_inset Formula $u$
+\end_inset
+
+ has exactly one argument:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+return that argument;
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+else:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+return 
+\begin_inset Formula $u$
+\end_inset
+
+;
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+From Proposition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:reductions"
+
+\end_inset
+
+ we have that 
+\begin_inset Formula $\left(u,v,w\right)\equiv e$
+\end_inset
+
+ is an invariant of the while loop, and 
+\begin_inset Formula $\mathrm{qntsize}\left(u,v,w\right)$
+\end_inset
+
+ decreases at each iteration.
+ Since 
+\begin_inset Formula $\mathrm{qntsize}\left(u,v,w\right)$
+\end_inset
+
+ is by definition a positive integer, it cannot decrease indefinitely, so
+ the loop terminates.
+ Proposition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:termination"
+
+\end_inset
+
+ then tells us that the returned value is equivalent to 
+\begin_inset Formula $e$
+\end_inset
+
+ and, if veckish, is in normal form.
+\end_layout
+
+\end_body
+\end_document

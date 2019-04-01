@@ -1,0 +1,106 @@
+-- Copyright 2019 Adobe. All rights reserved. This file is licensed to you
+-- under the Apache License, Version 2.0 (the "License"); you may not use this
+-- file except in compliance with the License. You may obtain a copy of the
+-- License at http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+-- WARRANTIES OR REPRESENTATIONS OF ANY KIND, either express or implied. See
+-- the License for the specific language governing permissions and limitations
+-- under the License.
+
+name:                compiler
+version:             0.2.0.0
+synopsis:            Compiler for the Chronikis language
+homepage:            
+license:             Apache-2.0
+license-file:        LICENSE
+author:              Kevin S. Van Horn
+maintainer:          vanhorn@adobe.com
+copyright:           (c) 2019 Adobe Inc.
+category:            
+build-type:          Simple
+extra-source-files:  
+cabal-version:       >=1.10
+
+-- To avoid duplicated efforts in documentation and dealing with the
+-- complications of embedding Haddock markup inside cabal files, it is
+-- common to point users to the README.md file.
+description:         Please see the README at
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     AST, BasicExpr, BasicModel,
+                       Checks, Env, InferShapesBounds,
+                       InferShapesBoundsImpl, Misc, NameGen,
+                       Number, Parser, ParseFctDef, Periodic,
+                       RAST, RNames, SSM, SSMConstruction,
+                       StanAST, StanASTImpl,  Transforms,
+                       Translate, TranslateImpl, TranslToR, Unique
+  ghc-options:         -Wall -fwarn-tabs -fno-ignore-asserts
+  build-depends:       base >= 4.7 && < 5
+                     , call-stack
+                     --, composition
+                     , containers
+                     --, data-ordlist
+                     --, either
+                     , extra
+                     , hmatrix-special
+                     , matrix
+                     , MissingH
+                     , mtl
+                     , parsec
+                     , scientific
+                     , string-qq
+                     , transformers
+                     --, Unique
+                     , vector
+  default-language:    Haskell2010
+
+executable chronikisc
+  hs-source-dirs:      app
+  main-is:             Main.hs
+  ghc-options:         -Wall -fwarn-tabs -threaded -rtsopts -with-rtsopts=-N -fno-ignore-asserts
+  build-depends:       base
+                     , containers
+                     --, extra
+                     , filepath
+                     , pretty-simple
+                     , compiler
+  default-language:    Haskell2010
+
+test-suite compiler-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  other-modules:       ASTSpec, BasicExprSpec, BasicModelSpec,
+                       ChecksSpec, EnvSpec
+                       -- EnvSpec is not NOT finished!
+                       InferShapesBoundsSpec,
+                       NameGenSpec, NumberSpec, ParserSpec, 
+                       PeriodicSpec, RASTSpec, RNamesSpec,
+                       SSMConstructionSpec, StanASTSpec, TransformsSpec,
+                       -- TransformsSpec is not finished!
+                       TranslateSpec,
+                       TranslToRSpec
+  build-depends:       base
+                     , compiler
+                     , hspec
+                     , QuickCheck
+                     , containers
+                     , string-qq
+                     , MissingH
+                     , parsec
+                     , scientific
+                     , call-stack
+                     , process
+                     , temporary
+                     , HUnit
+                     , pretty-simple
+                     , extra
+  ghc-options:         -Wall -Wno-type-defaults -fwarn-tabs -threaded -rtsopts -with-rtsopts=-N -fno-ignore-asserts
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://git.corp.adobe.com/vanhorn/tsa-platform

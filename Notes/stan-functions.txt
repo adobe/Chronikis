@@ -1,0 +1,538 @@
+// constants
+
+real pi()
+real e()
+real sqrt2()
+real log2()
+real log10()
+
+// arithmetic operators
+
+int        operator+(int, int)
+real       operator+(real, real)
+vector     operator+(vector, vector)
+row_vector operator+(vector, vector)
+matrix     operator+(matrix, matrix)
+vector     operator+(vector, real)
+vector     operator+(real, vector)
+row_vector operator+(row_vector, real)
+row_vector operator+(real, row_vector)
+matrix     operator+(matrix, real)
+matrix     operator+(real, matrix)
+
+int        operator-(int, int)
+real       operator-(real, real)
+vector     operator-(vector, vector)
+row_vector operator-(row_vector, row_vector)
+matrix     operator-(matrix, matrix)
+vector     operator-(vector, real)
+vector     operator-(real, vector)
+row_vector operator-(row_vector, real)
+row_vector operator-(real, row_vector)
+matrix     operator-(matrix, real)
+matrix     operator-(real, matrix)
+
+int        operator-(int)
+real       operator-(real)
+vector     operator-(vector)
+row_vector operator-(row_vector)
+matrix     operator-(matrix)
+
+int        operator*(int, int)
+real       operator*(real, real)
+vector     operator.*(vector, vector)
+row_vector operator.*(row_vector, row_vector)
+matrix     operator.*(matrix, matrix)
+vector     operator*(real, vector)
+vector     operator*(vector, real)
+row_vector operator*(real, row_vector)
+row_vector operator*(row_vector, real)
+matrix     operator*(matrix, real)
+matrix     operator*(real, matrix)
+
+real operator/(real, real)
+vector operator./(vector, vector)
+row_vector operator./(row_vector, row_vector)
+matrix operator./(matrix, matrix)
+vector operator/(vector, real)
+vector operator./(vector, real) // same as preceding?
+vector operator./(real, vector)
+row_vector operator/(row_vector, real)
+row_vector operator./(row_vector, real) // same as preceding?
+row_vector operator./(real, row_vector)
+matrix operator/(matrix, real)
+matrix operator./(matrix, real) // same as preceding?
+matrix operator./(real, matrix)
+
+int operator/(int, int) // rounds towards zero; or is it floor? Section 40.1
+int operator%(int, int) // x - y * floor(x/y)?
+
+real operator^(real, real)
+//real pow(real, real) // is this the same as operator^ ?
+
+// Operators returning Boolean values
+
+int operator<(int, int)
+int operator<(real, real)
+int operator<=(int, int)
+int operator<=(real, real)
+int operator>(int, int)
+int operator>(real, real)
+int operator>=(int, int)
+int operator>=(real, real)
+int operator==(int, int)
+int operator==(real, real)
+int operator!=(int, int)
+int operator!=(real, real)
+
+int operator!(int)
+int operator!(real)
+int operator&&(int, int)
+int operator&&(real, real)
+int operator||(int, int)
+int operator||(real, real)
+
+// { ... } notation
+// operator[]
+matrix operator'(matrix) // postfix
+row_vector operator'(vector) // postfix
+vector operator'(row_vector) // postfix
+
+matrix operator*(matrix, matrix)
+vector operator*(matrix, vector)
+row_vector operator*(row_vector, matrix)
+
+matrix operator*(vector, row_vector) // cross product
+
+real operator*(row_vector, vector) // dot product?
+row_vector operator/(row_vector, matrix) // arg1 %*% inverse(arg2)
+matrix operator/(matrix, matrix)         // arg1 %*% inverse(arg2)
+vector operator\(matrix, vector)         // inverse(arg1) %*% arg2
+matrix operator\(matrix, matrix)         // inverse(arg1) %*% arg2
+
+// min and max
+
+int min(int, int)
+real fmin(real, real)
+real min(real[])
+int min(int[])
+real min(vector)
+real min(row_vector)
+real min(matrix)
+
+int max(int, int)
+real fmax(real, real)
+real max(real[])
+int max(int[])
+real max(vector)
+real max(row_vector)
+real max(matrix)
+
+// vectorized unary functions
+
+T' abs(T) for any type T
+T' fabs(T) for any T  // how does this differ from abs?
+real abs(real)
+int abs(int)
+
+T' floor(T) for any T
+T' ceil(T) for any T
+T' round(T) for any T
+T' trunc(T) for any T
+T' sqrt(T) for any T
+T' cbrt(T) for any T
+T' square(T) for any T
+T' exp(T) for any T
+T' exp2(T) for any T // 2^x
+T' log(T) for any T
+T' log2(T) for any T // log_2(x)
+T' log10(T) for any T // log_10(x)
+T' inv(T) // 1/x
+T' inv_sqrt(T) // 1/sqrt(x)
+T' inv_square(T) // 1/x^2
+T' cos(T)
+T' sin(T)
+T' tan(T)
+T' acos(T)
+T' asin(T)
+T' atan(T)
+T' cosh(T)
+T' sinh(T)
+T' tanh(T)
+T' acosh(T)
+T' asinh(T)
+T' atanh(T)
+T' logit(T)
+T' inv_logit(T)
+T' inv_cloglog(T)
+T' erf(T)
+T' erfc(T)
+T' Phi(T)
+T' inv_Phi(T)
+T' Phi_approx(T)
+T' tgamma(T) for any T
+T' lgamma(T) for any T
+T' digamma(T) for any T
+T' trigamma(T) for any T
+T' expm1(T) for any T
+T' log1p(T) for any T
+T' log1m(T) for any T
+T' log1p_exp(T) for any T
+T' log1m_exp(T) for any T
+T' log_inv_logit(T)
+T' log1m_inv_logit(T)
+
+// Miscellaneous scalar functions
+
+int int_step(int)
+int int_step(real)
+real step(real)
+
+real fdim(real, real) // max(0, difference of args)
+real fmod(real, real)
+real hypot(real, real) // length of hypotenuse
+real atan2(real, real) // atan(x/y)
+
+real binary_log_loss(int, real)
+real owens_t(real, real)
+
+real inc_beta(real, real, real)
+real lbeta(real, real)
+real lmgamma(int, real)
+real gamma_p(real, real)
+real gamma_q(real, real)
+int choose(int, int)
+real bessel_first_kind(int, real)
+real bessel_second_kind(int, real)
+real modified_bessel_first_kind(int, real)
+real modified_bessel_second_kind(int, real)
+real falling_factorial(real, real)
+real lchoose(real, real)
+real log_falling_factorial(real, real)
+real rising_factorial(real, real)
+real log_rising_factorial(real, real)
+
+real fma(real, real, real) // x * y + z
+real lmultiply(real, real)
+real log_diff_exp(real, real)
+real log_mix(real, real, real)
+real log_sum_exp(real, real)
+
+// Array/matrix shape
+int[] dims(T) for any T
+int size(T) for any array type T
+int num_elements(T) for any array type T
+int num_elements(vector)
+int num_elements(row_vector)
+int num_elements(matrix)
+int rows(vector)
+int rows(row_vector) // = 1
+int rows(matrix)
+int cols(vector) // = 1
+int cols(row_vector)
+int cols(matrix)
+
+// Array/matrix construction
+
+T[]         reparray(T, int) for any T
+vector     rep_vector(real, int)
+row_vector rep_row_vector(real, int)
+
+T[,]   rep_array(T, int, int) for any T
+matrix rep_matrix(real, int, int)
+
+T[,,] rep_array(T, int, int, int) for any T
+
+matrix rep_matrix(vector, int)
+matrix rep_matrix(row_vector, int)
+
+matrix diag_matrix(vector)
+
+matrix append_col(matrix, matrix)
+matrix append_col(matrix, vector)
+matrix append_col(vector, matrix)
+matrix append_col(vector, vector)
+row_vector append_col(row_vector, row_vector)
+row_vector append_col(real, row_vector)
+row_vector append_col(row_vector, real)
+
+matrix append_row(matrix, matrix)
+matrix append_row(matrix, row_vector)
+matrix append_row(row_vector, matrix)
+matrix append_row(row_vector, row_vector)
+vector append_row(vector, vector)
+vector append_col(real, vector)
+vector append_col(vector, real)
+
+matrix to_matrix(vector) // 1-column matrix
+matrix to_matrix(row_vector) // 1-row matrix
+
+matrix to_matrix(vector, int, int) // a reshape operation
+matrix to_matrix(row_vector, int, int) // a reshape operation
+matrix to_matrix(real[], int, int)
+matrix to_matrix(int[], int, int)
+
+matrix to_matrix(vector, int, int, int) // reshape specifying col/row-major
+matrix to_matrix(row_vector, int, int, int) // ditto
+matrix to_matrix(real[], int, int, int) // specify col/row-major
+matrix to_matrix(int[], int, int, int) // specify col/row-major
+
+matrix to_matrix(real[,])
+matrix to_matrix(int[,])
+real[,] to_array_2d(matrix)
+
+matrix to_matrix(matrix, int, int) // a reshape operation
+matrix to_matrix(matrix, int, int, int) // reshape specifying col/row-major
+
+vector to_vector(matrix)
+vector to_vector(row_vector)
+vector to_vector(real[])
+vector to_vector(int[])
+row_vector to_row_vector(matrix)
+row_vector to_row_vector(vector)
+row_vector to_row_vector(real[])
+row_vector to_row_vector(int[])
+real[] to_array_1d(vector)
+real[] to_array_1d(row_vector)
+real[] to_array_1d(matrix)
+
+real[] to_array_1d(real[...])
+int[] to_array_1d(int[...])
+
+// Extracting parts of matrices/arrays
+
+vector diagonal(matrix)
+
+vector col(matrix, int)
+row_vector row(matrix, int)
+
+vector sub_col(matrix, int, int, int)
+row_vector sub_row(matrix, int, int, int)
+
+vector head(vector, int)
+row_vector head(row_vector, int)
+T[] head(T[], int) for any T  // applies up to 3 dimensions?
+
+vector tail(vector, i nt)
+row_vector tail(row_vector, int)
+T[] tail(T[], int) for any T  // applies up to 3 dimensions?
+
+vector segment(vector, int, int)
+row_vector segment(row_vector, int, int)
+T[] segment(T[], int, int) for any T  // applies up to 3 dimensions?
+
+// Matrix/array reductions
+
+int sum(int[])
+real sum(real[])
+real sum(vector)
+real sum(row_vector)
+real sum(matrix)
+
+real prod(real[])
+real prod(int[])
+real prod(vector)
+real prod(row_vector)
+real prod(matrix)
+
+real log_sum_exp(real[])
+real log_sum_exp(vector)
+real log_sum_exp(row_vector)
+real log_sum_exp(matrix)
+
+real mean(real[])
+real mean(vector)
+real mean(row_vector)
+real mean(matrix)
+
+real variance(real[])
+real variance(vector)
+real variance(row_vector)
+real variance(matrix)
+
+real sd(real[])
+real sd(vector)
+real sd(row_vector)
+real sd(matrix)
+
+// Linear algebra
+matrix diag_pre_multiply(vector, matrix)
+matrix diag_pre_multiply(row_vector, matrix)
+matrix diag_post_multiply(matrix, vector)
+matrix diag_post_multiply(matrix, row_vector)
+
+matrix tcrossprod(matrix) // M %*% t(M)
+matrix crossprod(matrix)  // t(M) %*% M
+matrix multiply_lower_tri_self_transpose(matrix) // tcrossprod for lowtriang
+
+real dot_product(vector, vector)
+real dot_product(vector, row_vector)
+real dot_product(row_vector, vector)
+real dot_product(row_vector, row_vector)
+
+row_vector columns_dot_product(vector, vector) // ?
+row_vector columns_dot_product(row_vector, row_vector) // ?
+row_vector columns_dot_product(matrix, matrix)
+
+vector rows_dot_product(vector, vector)
+vector rows_dot_product(row_vector, row_vector)
+vector rows_dot_product(matrix, matrix)
+
+real dot_self(vector)
+real dot_self(row_vector)
+row_vector columns_dot_self(vector)
+row_vector columns_dot_self(row_vector)
+row_vector columns_dot_self(matrix)
+vector rows_dot_self(vector)
+vector rows_dot_self(row_vector)
+vector rows_dot_self(matrix)
+
+
+
+-------------------------------------------------------------
+
+// If T is a type, then T' is T with int promoted to real
+
+
+real distance(vector, vector)
+real distance(vector, row_vector)
+real distance(row_vector, vector)
+real distance(row_vector, row_vector)
+real squared_distance(vector, vector)
+real squared_distance(vector, row_vector)
+real squared_distance(row_vector, vector)
+real squared_distance(row_vector, row_vector)
+
+matrix quad_form(matrix, matrix)
+real quad_form(matrix, vector)
+matrix quad_form_diag(matrix, vector)
+matrix quad_form_diag(matrix, row_vector)
+matrix quad_form_sym(matrix, matrix)
+real quad_form_sym(matrix, vector)
+real trace_quad_form(matrix, matrix)
+real trace_gen_quad_form(matrix, matrix, matrix)
+
+vector softmax(vector)
+vector log_softmax(vector)
+
+real[] cumulative_sum(real[])
+vector cumulative_sum(vector)
+row_vector cumulative_sum(row_vector)
+
+// exponentiated quadratic covariance functions
+matrix cov_exp_quad(row_vector, real, real)
+matrix cov_exp_quad(vector, real, real)
+matrix cov_exp_quad(real[], real, real)
+matrix cov_exp_quad(row_vector, row_vector, real, real)
+matrix cov_exp_quad(vector, vector, real, real)
+matrix cov_exp-quad(real[], real[], real, real)
+
+vector mdivide_left_tri_low(matrix, vector) // inverse(tri(arg1)) %*% arg2
+matrix mdivide_left_tri_low(matrix, matrix) // inverse(tri(arg1)) %*% arg2
+
+row_vector mdivide_right_tri_low(row_vector, matrix) // arg1 %*% inverse(tri(arg2))
+matrix mdivide_right_tri_low(matrix, matrix) // arg1 %*% inverse(tri(arg2))
+
+vector mdivide_left_spd(matrix, vector) // inverse(arg1) %*% arg2
+matrix mdivide_left_spd(matrix, matrix) // inverse(arg1) %*% arg2
+row_vector mdivide_right_spd(row_vector, matrix) // arg1 %*% inverse(arg2)
+matrix mdivide_right_spd(matrix, matrix) // arg1 %*% inverse(arg2)
+
+matrix matrix_exp(matrix)
+real trace(matrix)
+real determinant(matrix)
+real log_determinant(matrix)
+matrix inverse(matrix)
+matrix inverse_spd(matrix)
+vector eigenvalues_sym(matrix)
+matrix eigenvectors_sym(matrix)
+
+matrix qr_Q(matrix) // related to QR decomp
+matrix qr_R(matrix) // ditto
+matrix cholesky_decompose(matrix)
+vector singular_values(matrix)
+
+
+real[] sort_asc(real[])
+int[] sort_asc(int[])
+vector sort_asc(vector)
+row_vector sort_asc(row_vector)
+
+real[] sort_desc(real[])
+int[] sort_desc(int[])
+vector sort_desc(vector)
+row_vector sort_desc(row_vector)
+
+int[] sort_indices_asc(real[])
+int[] sort_indices_asc(int[])
+int[] sort_indices_asc(vector)
+int[] sort_indices_asc(row_vector)
+
+int[] sort_indices_desc(real[])
+int[] sort_indices_desc(int[])
+int[] sort_indices_desc(vector)
+int[] sort_indices_desc(row_vector)
+
+int rank(real[], int)
+int rank(int[], int)
+int rank(vector, int)
+int rank(row_vector, int)
+
+// sparse matrix ops omitted
+// compound arithmetic and assignment omitted
+// solvers omitted
+// discrete distributions omitted
+
+// ----- distributions -----
+
+-- unbounded
+reals~ normal(reals, reals)
+reals~ exp_mod_normal(reals, reals, reals) // exponential + normal
+reals~ skew_normal(reals, reals, reals)
+reals~ student_t(reals, reals, reals)
+reals~ cauchy(reals, reals)
+reals~ double_exponential(reals, reals) // see not on non-centered reparam
+reals~ logistic(reals, reals)
+reals~ gumbel(reals, reals)
+
+-- positive
+reals~ lognormal(reals, reals)
+reals~ chi_square(reals)
+reals~ inv_chi_square(reals)
+reals~ scaled_inv_chi_square(reals, reals)
+reals~ exponential(reals) // parameterized by rate
+reals~ gamma(reals, reals)
+reals~ inv_gamma(reals, reals)
+reals~ weibull(reals, reals)
+reals~ frechet(reals, reals)
+
+-- nonnegative
+reals~ rayleigh(reals)
+reals~ wiener(reals, reals, reals, reals)
+
+-- positive lower-bounded
+reals~ pareto(reals, reals)
+reals~ pareto_type_2(reals, reals, reals)
+
+-- unit interval
+reals~ beta(reals, reals)
+
+-- bounded
+reals ~ uniform(reals, reals)
+
+-- vectors
+vectors~ multi_normal(vectors, matrix)
+vectors~ multi_normal_prec(vectors, matrix)
+vectors~ multi_normal_cholesky(vectors, matrix)
+
+// omitted multivariate gaussian process
+
+vectors~ multi_student_t(real, vectors, matrix)
+matrix~ gaussian_dlm_obs(matrix, matrix, matrix, matrix, vector, matrix)
+matrix~ gaussian_dlm_obs(matrix, matrix, vector, matrix, vector, matrix)
+//                         F       G       V       W       m0     C0
+//                         Z'      T       H      RQR      a1     P1
+
+// omitted simplex distributions
+// omitted correlation matrix distributions
+// omitted covariance matrix distributions

@@ -1,0 +1,6 @@
+def main(sigma_q_scale, sigma_h_scale: real{0.0,},
+         mu_a: real, sigma_a: real{0.0,})
+  =
+  sigma_q ~ half_cauchy(sigma_q_scale);
+  sigma_h ~ half_normal(sigma_h_scale);
+  accum(wn(sigma_q), mu_a, sigma_a) + wn(sigma_h)

@@ -1,0 +1,1243 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Truncated Exponential Distribution with Mean Parameterization
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+copyright
+\end_layout
+
+\end_inset
+
+ 2019, Adobe Inc.
+ This document is licensed to you under the Apache License, Version 2.0.
+ You may obtain a copy of the license at 
+\begin_inset CommandInset href
+LatexCommand href
+name "http://www.apache.org/licenses/LICENSE-2.0"
+target "http://www.apache.org/licenses/LICENSE-2.0"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+Kevin S.
+ Van Horn
+\begin_inset Newline newline
+\end_inset
+
+Adobe, Inc.
+\end_layout
+
+\begin_layout Section
+Problem statement
+\end_layout
+
+\begin_layout Standard
+We wish to create a prior distribution for a quantity 
+\begin_inset Formula $x$
+\end_inset
+
+ that must lie between 
+\begin_inset Formula $0$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+, and we have in mind a desired mean 
+\begin_inset Formula $\mu$
+\end_inset
+
+ for the distribution.
+ As an example, the one-period autocorrelation coefficient 
+\begin_inset Formula $\rho=r^{P}$
+\end_inset
+
+ for a quasiperiodic process of period 
+\begin_inset Formula $P>0$
+\end_inset
+
+ could be anywhere between 0 and 1, but we expect it to be close to 1 (the
+ change in the periodic pattern from one period to the next is not large),
+ so we want, say, 
+\begin_inset Formula $E\left[\rho\right]=0.95$
+\end_inset
+
+.
+ Aside from this requirement, we would like the prior distribution to be
+ as uninformative as possible.
+\end_layout
+
+\begin_layout Standard
+Our initial thought might be to use a beta distribution for 
+\begin_inset Formula $y=x/u$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+\mathrm{Beta}\left(y\mid\alpha,\beta\right)\propto y^{\alpha-1}\left(1-y\right)^{\beta-1},
+\]
+
+\end_inset
+
+which has a mean of 
+\begin_inset Formula $\alpha/\beta$
+\end_inset
+
+, so we would want 
+\begin_inset Formula $\mu/u=\alpha/\beta$
+\end_inset
+
+ or 
+\begin_inset Formula $\beta=\alpha u/\mu$
+\end_inset
+
+.
+ But what should 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ be? We might consider maximizing the variance, which increases as 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ decreases, suggesting the improper prior obtained by setting 
+\begin_inset Formula $\alpha=0$
+\end_inset
+
+; but as Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Beta-distributions"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows, small values of 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ just push all of the probability mass to the extremes, which is not at
+ all what we have in mind by an uninformative prior distribution.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename img/dbeta-1-3.png
+	lyxscale 20
+	scale 20
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename img/dbeta-0.1-0.3.png
+	lyxscale 20
+	scale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Beta-distributions"
+
+\end_inset
+
+Beta distributions with mean 
+\begin_inset Formula $\alpha/\beta=1/3$
+\end_inset
+
+, and 
+\begin_inset Formula $\alpha=1$
+\end_inset
+
+ (left) or 
+\begin_inset Formula $\alpha=0.1$
+\end_inset
+
+ (right)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+entropy 
+\emph default
+
+\begin_inset Formula 
+\[
+H(f)\triangleq-\int f(x)\log f(x)\mathrm{d}x
+\]
+
+\end_inset
+
+of a distribution with density function 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ measures how spread-out or diffuse it is; this suggests that the prior
+ for 
+\begin_inset Formula $x$
+\end_inset
+
+ should be the maximum-entropy distribution having support 
+\begin_inset Formula $[0,u]$
+\end_inset
+
+ and mean 
+\begin_inset Formula $\mu$
+\end_inset
+
+.
+ This maximum-entropy distribution has the form
+\begin_inset Formula 
+\begin{align*}
+f\left(x\mid\theta,u\right) & =\frac{1}{Z(\theta,u)}\exp\left(-\theta x\right)\\
+Z(\theta,u) & =\theta^{-1}\left(1-e^{-\theta u}\right)
+\end{align*}
+
+\end_inset
+
+for some 
+\begin_inset Formula $\theta$
+\end_inset
+
+; that is, it is a truncated exponential distribution.
+ Its mean is
+\begin_inset Formula 
+\[
+E[x]=\theta^{-1}\left(1-\frac{\theta u}{e^{\theta u}-1}\right).
+\]
+
+\end_inset
+
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Truncated-exponential"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows two examples.
+ As expected, if we let 
+\begin_inset Formula $u\rightarrow\infty$
+\end_inset
+
+ then the normalization constant 
+\begin_inset Formula $Z\left(\theta,u\right)\rightarrow\theta^{-1}$
+\end_inset
+
+ and the mean 
+\begin_inset Formula $E[x]\rightarrow\theta^{-1}$
+\end_inset
+
+, that is, we get the (untruncated) exponential distribution.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename img/plot-theta-3.6.png
+	lyxscale 20
+	scale 20
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename img/Plot-theta-minus3.6.png
+	lyxscale 20
+	scale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Truncated-exponential"
+
+\end_inset
+
+Truncated exponential distributions with upper bound 1.
+ Left: 
+\begin_inset Formula $\theta=3.6$
+\end_inset
+
+ and mean 0.25.
+ Right: 
+\begin_inset Formula $\theta=-3.6$
+\end_inset
+
+ and mean 0.75.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+This document addresses two issues that arise in using this truncated exponentia
+l distribution in a Bayesian model:
+\end_layout
+
+\begin_layout Enumerate
+How to robustly compute the log PDF.
+\end_layout
+
+\begin_layout Enumerate
+How to robustly compute 
+\begin_inset Formula $\theta$
+\end_inset
+
+ from 
+\begin_inset Formula $\mu$
+\end_inset
+
+ using differentiable expressions.
+\end_layout
+
+\begin_layout Standard
+The second issue arises when using modeling languages such as 
+\begin_inset CommandInset href
+LatexCommand href
+name "Stan"
+target "https://mc-stan.org"
+literal "false"
+
+\end_inset
+
+ or 
+\begin_inset CommandInset href
+LatexCommand href
+name "PyMC3"
+target "https://docs.pymc.io"
+literal "false"
+
+\end_inset
+
+, which use auto-differentiation to compute the gradient of the log joint
+ PDF.
+\end_layout
+
+\begin_layout Section
+Robustly computing the log PDF
+\end_layout
+
+\begin_layout Standard
+The probability density function is
+\begin_inset Formula 
+\begin{align*}
+f\left(x\mid\theta,u\right) & =Z\left(\theta,u\right)^{-1}\exp\left(-\theta x\right)\\
+ & =\frac{\theta e^{-\theta x}}{1-e^{-\theta u}}
+\end{align*}
+
+\end_inset
+
+which, for 
+\begin_inset Formula $\theta<0$
+\end_inset
+
+, it is convenient to re-express as 
+\begin_inset Formula 
+\[
+f\left(x\mid\theta,u\right)=\frac{(-\theta)e^{\theta\left(u-x\right)}}{1-e^{\theta u}}.
+\]
+
+\end_inset
+
+For 
+\begin_inset Formula $\theta=0$
+\end_inset
+
+ we have 
+\begin_inset Formula 
+\[
+f\left(x\mid0,u\right)=\frac{1}{u}.
+\]
+
+\end_inset
+
+We then get a log density of 
+\begin_inset Formula 
+\begin{align*}
+\log f\left(x\mid\theta,u\right) & =\begin{cases}
+\log\theta-\theta x-\psi\left(\theta u\right) & \mbox{if }\theta>0\\
+-\log u & \mbox{if }\theta=0\\
+\log\left(-\theta\right)+\theta\left(u-x\right)-\psi\left(-\theta u\right) & \mbox{if }\theta<0.
+\end{cases}\\
+\psi(y) & \triangleq\log\left(1-e^{-y}\right)
+\end{align*}
+
+\end_inset
+
+Note that 
+\begin_inset Formula 
+\[
+f\left(x\mid\theta,u\right)=f\left(u-x\mid-\theta,u\right)
+\]
+
+\end_inset
+
+and so we can restrict our attention to the case 
+\begin_inset Formula $\theta\geq0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Robustly evaluating 
+\begin_inset Formula $\psi(y)$
+\end_inset
+
+ presents some difficulties:
+\end_layout
+
+\begin_layout Itemize
+If 
+\begin_inset Formula $y$
+\end_inset
+
+ is large then 
+\begin_inset Formula $e^{-y}$
+\end_inset
+
+ is very small, and in computing 
+\begin_inset Formula $\log\left(1-e^{-y}\right)\approx e^{-y}$
+\end_inset
+
+ we lose many bits of precision in the result.
+ We can solve this by using 
+\begin_inset Formula 
+\[
+\psi(y)=\mathrm{log1p}\left(-e^{-y}\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\mathrm{log1p}(a)$
+\end_inset
+
+ is a numerically stable implementation of 
+\begin_inset Formula $\log\left(1+a\right)$
+\end_inset
+
+ that uses 
+\begin_inset Formula 
+\[
+\log\left(1+a\right)=\sum_{n=1}^{\infty}\left(-1\right)^{n+1}\frac{a^{n}}{n}
+\]
+
+\end_inset
+
+for 
+\begin_inset Formula $0\leq a\ll1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+If 
+\begin_inset Formula $y$
+\end_inset
+
+ is small then 
+\begin_inset Formula $e^{-y}\approx1$
+\end_inset
+
+, and the above approach works very badly.
+ One option is to use 
+\begin_inset Formula 
+\[
+\psi(y)=\log\left(-\mathrm{expm1}\left(-y\right)\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\mathrm{expm1}(a)$
+\end_inset
+
+ is a numerically stable implementation of 
+\begin_inset Formula $e^{a}-1$
+\end_inset
+
+ that uses
+\begin_inset Formula 
+\[
+e^{a}-1=\sum_{n=1}^{\infty}\frac{a^{n}}{n!}
+\]
+
+\end_inset
+
+for 
+\begin_inset Formula $0\leq a\ll1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The above is the method proposed by Mächler 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "maechler"
+literal "false"
+
+\end_inset
+
+, using 
+\begin_inset Formula $y=\log2$
+\end_inset
+
+ as the cutoff for switching between the two approaches.
+\end_layout
+
+\begin_layout Standard
+There is another method for handling the case when 
+\begin_inset Formula $\theta u$
+\end_inset
+
+ is especially small.
+ Note that for 
+\begin_inset Formula $0<y\ll1$
+\end_inset
+
+, 
+\begin_inset Formula 
+\begin{align*}
+\psi(y) & =\log\left(1-e^{-y}\right)\\
+ & \approx\log\left(1-\left(1-y\right)\right)\\
+ & =\log y
+\end{align*}
+
+\end_inset
+
+and so for 
+\begin_inset Formula $0<\theta u\ll1$
+\end_inset
+
+, 
+\begin_inset Formula 
+\begin{align*}
+\log f\left(x\mid\theta,u\right) & \approx\log\theta-\theta x-\log\left(\theta u\right)\\
+ & =-\log u-\theta x
+\end{align*}
+
+\end_inset
+
+with the potentially large (in absolute value) terms 
+\begin_inset Formula $\log\theta$
+\end_inset
+
+ cancelling out.
+ So define 
+\begin_inset Formula 
+\[
+\zeta\left(y\right)\triangleq\psi(y)-\log y
+\]
+
+\end_inset
+
+ and use 
+\begin_inset Formula 
+\begin{align*}
+\log f\left(x\mid\theta,u\right) & =\log\theta-\theta x-\psi\left(\theta u\right)+\log\left(\theta u\right)-\log\left(\theta u\right)\\
+ & =\log\theta-\theta x-\zeta\left(\theta u\right)-\log\left(\theta u\right)\\
+ & =-\log u-\theta x-\zeta\left(\theta u\right).
+\end{align*}
+
+\end_inset
+
+Using Mathematica, we find
+\begin_inset Formula 
+\begin{align*}
+\zeta\left(y\right) & =-\frac{1}{2}y+\frac{1}{24}y^{2}-\frac{1}{2880}y^{4}+\frac{1}{181440}y^{6}-\frac{1}{9676800}y^{8}\\
+ & \quad+\frac{1}{479001600}y^{10}-\frac{691}{15692092416000}y^{12}+\frac{1}{1046139494400}y^{14}-\cdots
+\end{align*}
+
+\end_inset
+
+The relative error for various values of 
+\begin_inset Formula $y$
+\end_inset
+
+ and series truncation points is given below, where 
+\begin_inset Formula $k$
+\end_inset
+
+ is the maximum power of 
+\begin_inset Formula $y$
+\end_inset
+
+ used, and 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ is the relative error:
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $k$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\epsilon$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-4.2\times10^{-18}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.25
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.1\times10^{-17}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-1.3\times10^{-17}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In summary, we use the following to compute the log pdf: 
+\begin_inset Formula 
+\begin{align*}
+\log f\left(x\mid\theta,u\right) & =\begin{cases}
+\log f\left(u-x\mid-\theta,u\right) & \mbox{if }\theta<0\\
+-\log u-\theta x-\zeta\left(\theta u\right) & \mbox{if }0\leq\theta u\leq0.1\\
+\log\theta-\theta x-\psi\left(\theta u\right) & \mbox{if }\theta u>0.1
+\end{cases}\\
+\zeta(y) & =\psi(y)-\log y\\
+ & \approx-\frac{1}{2}y+\frac{1}{24}y^{2}-\frac{1}{2880}y^{4}+\frac{1}{181440}y^{6}-\frac{1}{9676800}y^{8}\\
+\psi\left(y\right) & =\begin{cases}
+\log\left(-\mathrm{expm1}\left(-y\right)\right) & \mbox{if }y\leq\log2\\
+\mathrm{log1p}\left(-e^{-y}\right) & \mbox{if }y>\log2.
+\end{cases}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Mean for rate parameterization
+\end_layout
+
+\begin_layout Standard
+The mean 
+\begin_inset Formula $\mu=E\left[x\mid\theta,u\right]$
+\end_inset
+
+ is
+\begin_inset Formula 
+\begin{align*}
+\mu & =Z\left(\theta,u\right)^{-1}\int_{0}^{u}x\exp\left(-\theta x\right)\mathrm{d}x\\
+ & =Z\left(\theta,u\right)^{-1}\left[-\theta^{-2}\left(e^{-\theta x}\left(1+\theta x\right)\right)\right]_{0}^{u}\qquad\mbox{\{using wolframalpha\}}\\
+ & =\left(\theta Z\left(\theta,u\right)\right)^{-1}\left(-\theta^{-1}\right)\left(e^{-\theta u}\left(1+\theta u\right)-1\right)\\
+ & =\left(1-e^{-\theta u}\right)^{-1}\left(\theta^{-1}-e^{-\theta u}\left(\theta^{-1}+u\right)\right)\\
+ & =\left(1-e^{-\theta u}\right)^{-1}\left(\theta^{-1}\left(1-e^{-\theta u}\right)-ue^{-\theta u}\right)\\
+ & =\theta^{-1}-\frac{ue^{-\theta u}}{1-e^{-\theta u}}\\
+ & =\theta^{-1}-\frac{u}{e^{\theta u}-1}\\
+ & =\theta^{-1}\left(1-\frac{\theta u}{e^{\theta u}-1}\right)
+\end{align*}
+
+\end_inset
+
+All of this holds whether 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is positive or negative.
+ Defining 
+\begin_inset Formula 
+\begin{align*}
+\mu_{r} & =\mu/u\\
+\theta_{r} & =\theta u
+\end{align*}
+
+\end_inset
+
+we can rewrite the above as 
+\begin_inset Formula 
+\begin{align*}
+\mu_{r} & =g\left(\theta_{r}\right)\\
+g\left(y\right) & \triangleq\frac{1}{y}\left(1-\frac{y}{e^{y}-1}\right).
+\end{align*}
+
+\end_inset
+
+Then 
+\begin_inset Formula 
+\begin{align*}
+\lim_{y\rightarrow0}g(y) & =\lim_{y\rightarrow0}y^{-1}\left(1-\frac{y}{e^{y}-1}\right)\\
+ & =\lim_{y\rightarrow0}y^{-1}\left(\frac{e^{y}-1-y}{e^{y}-1}\right)\\
+ & =\lim_{y\rightarrow0}y^{-1}\left(\frac{\sum_{n=2}^{\infty}y^{n}/n!}{\sum_{n=1}^{\infty}y^{n}/n!}\right)\\
+ & =\lim_{y\rightarrow0}y^{-1}\frac{y^{2}/2!}{y/1!}\\
+ & =\frac{1}{2}
+\end{align*}
+
+\end_inset
+
+and so 
+\begin_inset Formula $\mu_{r}=1/2$
+\end_inset
+
+ when 
+\begin_inset Formula $\theta_{r}=0$
+\end_inset
+
+.
+ Furthermore, 
+\begin_inset Formula 
+\begin{align*}
+g\left(-y\right) & =-y^{-1}-\frac{1}{e^{-y}-1}\\
+ & =-y^{-1}-\frac{e^{y}}{1-e^{y}}\\
+ & =-y^{-1}+\frac{e^{y}}{e^{y}-1}\\
+ & =-y^{-1}+\frac{\left(e^{y}-1\right)+1}{e^{y}-1}\\
+ & =-y^{-1}+1+\frac{1}{e^{y}-1}\\
+ & =1-\left(y^{-1}-\frac{1}{e^{y}-1}\right)\\
+ & =1-g\left(y\right)
+\end{align*}
+
+\end_inset
+
+and so 
+\begin_inset Formula $\mu_{r}\left(-\theta_{r}\right)=1-\mu_{r}\left(\theta_{r}\right)$
+\end_inset
+
+.
+ Finally, for small values of 
+\begin_inset Formula $y$
+\end_inset
+
+ it may be better to compute 
+\begin_inset Formula $g(y)$
+\end_inset
+
+ using
+\begin_inset Formula 
+\[
+g(y)=y^{-1}\left(\frac{e^{y}-1-y}{e^{y}-1}\right)=y^{-1}\left(\frac{\sum_{n=2}^{\infty}y^{n}/n!}{\sum_{n=1}^{\infty}y^{n}/n!}\right).
+\]
+
+\end_inset
+
+In practice we need to obtain 
+\begin_inset Formula $\theta$
+\end_inset
+
+ from 
+\begin_inset Formula $\mu$
+\end_inset
+
+, which we do by obtaining 
+\begin_inset Formula $\theta_{r}$
+\end_inset
+
+ from 
+\begin_inset Formula $\mu_{r}$
+\end_inset
+
+, which in turn requires inverting 
+\begin_inset Formula $g$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{align*}
+\theta_{r} & =g^{-1}\left(\mu_{r}\right)\\
+\theta & =\frac{1}{u}g^{-1}\left(\frac{\mu}{u}\right).
+\end{align*}
+
+\end_inset
+
+
+\emph on
+[TODO: Prove that 
+\begin_inset Formula $g$
+\end_inset
+
+ is strictly decreasing, to ensure that it has an inverse.]
+\emph default
+ Furthermore, computation of the gradient via autodifferentiation requires
+ that we express 
+\begin_inset Formula $g^{-1}\left(x\right)$
+\end_inset
+
+ as a (piecewise) differentiable expression.
+\end_layout
+
+\begin_layout Standard
+We compute 
+\begin_inset Formula $g^{-1}(x)$
+\end_inset
+
+ as follows:
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $x<g(22)\approx4.545\times10^{-2}$
+\end_inset
+
+, then 
+\begin_inset Formula $g^{-1}(x)=x^{-1}$
+\end_inset
+
+ to within a relative error of 
+\begin_inset Formula $10^{-6}$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The relative error was verified empirically on a grid of one million 
+\begin_inset Formula $x$
+\end_inset
+
+ values running from 
+\begin_inset Formula $10^{-6}\cdot g(22)$
+\end_inset
+
+ to 
+\begin_inset Formula $g(22)$
+\end_inset
+
+, spaced uniformly on a logarithmic scale.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+If 
+\begin_inset Formula $g(22)\leq x\leq g(4.5)\approx0.2110$
+\end_inset
+
+, then 
+\begin_inset Formula $g^{-1}(x)=x^{-1}h_{1}(g(4.5)-x)$
+\end_inset
+
+ to within a relative error of 
+\begin_inset Formula $10^{-6}$
+\end_inset
+
+, where
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $h_{1}(x)$
+\end_inset
+
+ is a degree-9 polynomial.
+\end_layout
+
+\begin_layout Itemize
+The coefficients were found by taking a grid of 
+\begin_inset Formula $y$
+\end_inset
+
+ values from 4.5 to 22 with a spacing of 
+\begin_inset Formula $10^{-6}$
+\end_inset
+
+, computing 
+\begin_inset Formula $x=g(y)$
+\end_inset
+
+ for each of them, then doing a least-squares fit of 
+\begin_inset Formula $xy$
+\end_inset
+
+ to 
+\begin_inset Formula $g(4.5)-x$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+If 
+\begin_inset Formula $g(4.5)<x\leq0.5$
+\end_inset
+
+, then 
+\begin_inset Formula $g^{-1}(x)=h_{2}\left(0.5-x\right)$
+\end_inset
+
+ to within a relative error of 
+\begin_inset Formula $10^{-6}$
+\end_inset
+
+, where
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $h_{2}(x)$
+\end_inset
+
+ is a degree-9 polynomial.
+\end_layout
+
+\begin_layout Itemize
+The coefficients were found by taking a grid of 
+\begin_inset Formula $y$
+\end_inset
+
+ values from 0 to 4.5 with a spacing of 
+\begin_inset Formula $10^{-6}$
+\end_inset
+
+, computing 
+\begin_inset Formula $x=g(y)$
+\end_inset
+
+ for each of them, then doing a least-squares fit of 
+\begin_inset Formula $y$
+\end_inset
+
+ to 
+\begin_inset Formula $0.5-x$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+In cases 2 and 3 the relative error was verified empirically on a grid of
+ values from the smallest 
+\begin_inset Formula $x$
+\end_inset
+
+ to the largest 
+\begin_inset Formula $x$
+\end_inset
+
+, using 10 times as many points as were used for the least-squares fit.ß
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "maechler"
+literal "false"
+
+\end_inset
+
+Martin Mächler, 2019.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Accurately Computing 
+\begin_inset Formula $\log(1-\exp(-\left|a\right|))$
+\end_inset
+
+ Assessed by the Rmpfr package.
+\begin_inset Quotes erd
+\end_inset
+
+ A vignette of the R package Rmpfr, 
+\begin_inset Quotes eld
+\end_inset
+
+R MPFR—Multiple Precision Floating-Point Reliable.
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://cran.R-project.org/package=Rmpfr"
+
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document

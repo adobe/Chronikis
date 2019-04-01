@@ -1,0 +1,3 @@
+def main(mu_a: real, sigma_a, sigma_scale: real{0.0,}) =
+  sigma ~ half_normal(sigma_scale);
+  wn(sigma) + constp(mu_a, sigma_a)

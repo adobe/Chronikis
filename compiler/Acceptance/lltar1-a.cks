@@ -1,0 +1,13 @@
+def main(rho_d_mean: real{0.0, 1.0}, sigma_d: real{0.0,},
+         mu_a: real, sigma_a: real{0.0,},
+	 rho_b_mean: real{0.0, 1.0}, sigma_b_scale, sigma_h_scale: real{0.0,})
+  =
+  sigma_h ~ half_normal(sigma_h_scale);
+  rho_b ~ exponential_mt(rho_b_mean, 1.0);
+  phi_b = sqrt(1.0 - rho_b^2);
+  sigma_b ~ half_normal(sigma_b_scale);
+  rho_d ~ exponential_mt(rho_d_mean, 1.0);
+  phi_d = sqrt(1.0 - rho_d^2);
+  accum(ar1(phi_d, rho_d * sigma_d, sigma_d), mu_a, sigma_a)
+  + ar1(phi_b, rho_b * sigma_b, sigma_b)
+  + wn(sigma_h)

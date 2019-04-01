@@ -1,0 +1,10 @@
+def main(sigma_qa_scale, sigma_qd_scale, sigma_h_scale: real{0.0,},
+         mu_a: real, sigma_a: real{0.0,},
+	 mu_d: real, sigma_d: real{0.0,})
+  =
+  sigma_qa ~ half_normal(sigma_qa_scale);
+  sigma_qd ~ half_normal(sigma_qd_scale);
+  sigma_h ~ half_normal(sigma_h_scale);
+  accum(accum(wn(sigma_qd), mu_d, sigma_d) + wn(sigma_qa),
+        mu_a, sigma_a)
+  + wn(sigma_h)

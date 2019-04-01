@@ -1,0 +1,4470 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{mathtools}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Chronikis User Manual
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+copyright
+\end_layout
+
+\end_inset
+
+ 2019, Adobe Inc.
+ This document is licensed to you under the Apache License, Version 2.0.
+ You may obtain a copy of the license at 
+\begin_inset CommandInset href
+LatexCommand href
+name "http://www.apache.org/licenses/LICENSE-2.0"
+target "http://www.apache.org/licenses/LICENSE-2.0"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+Kevin S.
+ Van Horn
+\begin_inset Newline newline
+\end_inset
+
+Adobe Inc.
+\end_layout
+
+\begin_layout Standard
+Chronikis (kroh-NEE-kees) is a special-purpose language for creating time-series
+ models.
+ It comes with a compiler 
+\family typewriter
+chronikisc
+\family default
+, and an R package 
+\family typewriter
+chronikis
+\family default
+ that contains utilities for compiling Chronikis programs as well as estimating
+ and forecasting with the compiled time-series models.
+\end_layout
+
+\begin_layout Standard
+The name 
+\begin_inset Quotes eld
+\end_inset
+
+Chronikis
+\begin_inset Quotes erd
+\end_inset
+
+ is derived from the phrase χρονική σειρά (
+\emph on
+chronikí seirá
+\emph default
+), which means 
+\begin_inset Quotes eld
+\end_inset
+
+time series
+\begin_inset Quotes erd
+\end_inset
+
+ in Greek.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+This initial release is still missing a number of functions and distributions
+ that the language ought to have; the focus was on implementing enough that
+ all of the models in the 
+\family typewriter
+compiler/Acceptance
+\family default
+ subdirectory could be compiled.
+\end_layout
+
+\begin_layout Section
+Installation
+\end_layout
+
+\begin_layout Enumerate
+Install needed prerequisites.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Install 
+\begin_inset CommandInset href
+LatexCommand href
+name "R"
+target "https://www.r-project.org/"
+literal "false"
+
+\end_inset
+
+ if necessary.
+\end_layout
+
+\begin_layout Enumerate
+Install the R package 
+\begin_inset CommandInset href
+LatexCommand href
+name "rstan"
+target "https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Install 
+\begin_inset CommandInset href
+LatexCommand href
+name "The Haskell Tool Stack"
+target "https://docs.haskellstack.org/en/stable/install_and_upgrade/"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Clone or download this git repository and 
+\family typewriter
+cd
+\family default
+ to the root.
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+cd compiler
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+stack install
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+You may run into issues with the Haskell package 
+\family typewriter
+hmatrix-gsl
+\family default
+.
+ This requires the GNU Scientific Library and the 
+\family typewriter
+pkg-config
+\family default
+ utility.
+ On Mac OSX with 
+\begin_inset CommandInset href
+LatexCommand href
+name "Homebrew"
+target "https://brew.sh"
+literal "false"
+
+\end_inset
+
+ you can obtain these by issuing the commands
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+brew install gsl
+\end_layout
+
+\begin_layout LyX-Code
+brew install pkg-config
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Fire up R and install the package 
+\family typewriter
+chronikis
+\family default
+ using these commands:
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+setwd(
+\emph on
+path_to_cloned_git_repository
+\emph default
+)
+\begin_inset Newline newline
+\end_inset
+
+install.packages('chronikis_0.1.0.tar.gz', repos=NULL)
+\end_layout
+
+\begin_layout Enumerate
+Add 
+\family typewriter
+~/.local/bin
+\family default
+ to your bash 
+\family typewriter
+PATH
+\family default
+ variable.
+\end_layout
+
+\begin_layout Enumerate
+Add 
+\family typewriter
+~/.local/bin
+\family default
+ to your R 
+\family typewriter
+PATH
+\family default
+ variable.
+ (This is where 
+\family typewriter
+chronikisc
+\family default
+ got installed.) To do this, open your 
+\family typewriter
+~/.Renviron
+\family default
+ file (create it if it doesn't exist) and add the line
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+PATH=${PATH}:~/.local/bin
+\family default
+
+\begin_inset Newline newline
+\end_inset
+
+If there is already a line setting 
+\family typewriter
+PATH
+\family default
+, add 
+\family typewriter
+~/.local/bin
+\family default
+ to the end.
+\end_layout
+
+\begin_layout Section
+Using Chronikis
+\end_layout
+
+\begin_layout Standard
+Here is what the process of compiling and running a model generally looks
+ like.
+ In the following, 
+\family typewriter
+ytrain
+\family default
+ is the time series on which to train the model.
+ The following assumes that you have written a Chronikis program and saved
+ it to 
+\begin_inset Quotes eld
+\end_inset
+
+
+\family typewriter
+my_model.cks
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout LyX-Code
+library(rstan)
+\end_layout
+
+\begin_layout LyX-Code
+library(chronikis)
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+sm <- cksCompile("my_model.cks", "createSSMs")
+\end_layout
+
+\begin_layout LyX-Code
+source("my_model.R")  # file was created by cksCompile
+\end_layout
+
+\begin_layout LyX-Code
+ 
+\end_layout
+
+\begin_layout LyX-Code
+# Model training
+\end_layout
+
+\begin_layout LyX-Code
+margs <- mdlArgs(
+\emph on
+model
+\emph default
+, 
+\emph on
+arguments
+\emph default
+, 
+\emph on
+go
+\emph default
+, 
+\emph on
+here
+\emph default
+, 
+\emph on
+...
+\emph default
+)
+\end_layout
+
+\begin_layout LyX-Code
+sma <- setArgs(sm, margs)
+\end_layout
+
+\begin_layout LyX-Code
+fit <- hmc_estimate(ytrain, sma)
+\end_layout
+
+\begin_layout LyX-Code
+# fit <- vb_estimate(ytrain, sma)
+\end_layout
+
+\begin_layout LyX-Code
+# fit <- map_estimate(ytrain, sma)
+\end_layout
+
+\begin_layout LyX-Code
+post <- posterior_sample(fit)
+\end_layout
+
+\begin_layout LyX-Code
+npost <- 100
+\end_layout
+
+\begin_layout LyX-Code
+# It gets slow if you use more than 100 posterior draws
+\end_layout
+
+\begin_layout LyX-Code
+models0 <- createSSMs(margs, post, npost)
+\end_layout
+
+\begin_layout LyX-Code
+filtered0 <- filter_models(ytrain, models0)
+\end_layout
+
+\begin_layout LyX-Code
+ 
+\end_layout
+
+\begin_layout LyX-Code
+# Model checking
+\end_layout
+
+\begin_layout LyX-Code
+lltrain <- averagedLL(models0, ytrain)
+\end_layout
+
+\begin_layout LyX-Code
+# Compare yrep[,i], 1 <= i <= npost, to ytrain;
+\end_layout
+
+\begin_layout LyX-Code
+# are they visually similar?
+\end_layout
+
+\begin_layout LyX-Code
+# Can also compute various summary statistics T()
+\end_layout
+
+\begin_layout LyX-Code
+# and check that T(ytrain) is within range of values
+\end_layout
+
+\begin_layout LyX-Code
+# T(yrep[,i]).
+\end_layout
+
+\begin_layout LyX-Code
+yrep <- forecast_sample(models0, length(ytrain), 1)
+\end_layout
+
+\begin_layout LyX-Code
+# Check that smoothed time series looks reasonable.
+\end_layout
+
+\begin_layout LyX-Code
+s <- smoothed_ts(ytrain, filtered0)
+\end_layout
+
+\begin_layout LyX-Code
+ysmooth <- average_normals(s$means, s$stddevs, 0.1, TRUE)
+\end_layout
+
+\begin_layout LyX-Code
+# Get one-step predictive residuals.
+\end_layout
+
+\begin_layout LyX-Code
+res <- lapply(filtered, residuals, type='raw', sd=FALSE)
+\end_layout
+
+\begin_layout LyX-Code
+ 
+\end_layout
+
+\begin_layout LyX-Code
+# Forecasting
+\end_layout
+
+\begin_layout LyX-Code
+models <- update_models(filtered = filtered0)
+\end_layout
+
+\begin_layout LyX-Code
+nsteps <- 20
+\end_layout
+
+\begin_layout LyX-Code
+alpha <- 0.10
+\end_layout
+
+\begin_layout LyX-Code
+# 90% predictive intervals
+\end_layout
+
+\begin_layout LyX-Code
+fc <- forecast_intervals(models, nsteps, alpha, TRUE)
+\end_layout
+
+\begin_layout LyX-Code
+# fc$mean[t] is the predictive mean t steps in the future
+\end_layout
+
+\begin_layout LyX-Code
+# (fc$lower[t], fc$upper[t]) is the 90% predictive interval
+\end_layout
+
+\begin_layout LyX-Code
+# t steps in the future.
+\end_layout
+
+\begin_layout LyX-Code
+ndpm <- 200  # Number of predictive draws per model
+\end_layout
+
+\begin_layout LyX-Code
+ymc <- forecast_sample(models, nsteps, ndpm)
+\end_layout
+
+\begin_layout LyX-Code
+# ymc is a nsteps x (npost * ndpm) matrix of predictive draws
+\end_layout
+
+\begin_layout LyX-Code
+# that can be used for Monte Carlo analysis
+\end_layout
+
+\begin_layout LyX-Code
+minmc <- matrixStatts::colMins(ymc[11:20, ])
+\end_layout
+
+\begin_layout LyX-Code
+# minmc is a posterior predictive sample of
+\end_layout
+
+\begin_layout LyX-Code
+# min(y[n+11], ..., y[n+20]), where n = length(ytrain)
+\end_layout
+
+\begin_layout LyX-Code
+pred <- quantile(minmc, c(0.05, 0.95))
+\end_layout
+
+\begin_layout LyX-Code
+# pred is 90% predictive interval for
+\end_layout
+
+\begin_layout LyX-Code
+# min(y[n+11], ..., y[n+20])
+\end_layout
+
+\begin_layout Standard
+Use 
+\family typewriter
+help(package=chronikis)
+\family default
+ to see documentation on all of the functions provided in the R package.
+ The directory 
+\family typewriter
+compiler/Acceptance
+\family default
+ contains examples of Chronikis programs.
+\end_layout
+
+\begin_layout Section
+Language Definition
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\treal}{\mbox{\texttt{real}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\tint}{\mbox{\texttt{int}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\tvec}[1]{\mbox{\texttt{real[}}#1\mbox{\texttt{]}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\tmat}[2]{\mbox{\texttt{real[}}#1\mbox{\texttt{,}}#2\mbox{\texttt{]}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\trrr}[3]{\mbox{\texttt{real[}}#1\mbox{\texttt{,}}#2\mbox{\texttt{,}}#3\mbox{\texttt{]}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\trrrr}[4]{\mbox{\texttt{real[}}#1\mbox{\texttt{,}}#2\mbox{\texttt{,}}#3\mbox{\texttt{,}}#4\mbox{\texttt{]}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\treald}{\mbox{\texttt{real\textasciitilde}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\tvecd}[1]{\mbox{\texttt{real[}}#1\mbox{\texttt{]\textasciitilde}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\tmatd}[2]{\mbox{\texttt{real[}}#1\mbox{\texttt{,}}#2\mbox{\texttt{]\textasciitilde}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\tsd}{\mbox{\texttt{real\$\textasciitilde}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\arri}[2]{#1\mbox{\texttt{[}}#2\mbox{\texttt{]}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\arrij}[3]{#1\mbox{\texttt{[}}#2,#3\mbox{\texttt{]}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\call}[2]{\mbox{\texttt{#1(}}#2\mbox{\texttt{)}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\mcode}[1]{\,\mbox{\texttt{#1}}\,}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\mlit}[1]{\,\mbox{`\texttt{#1}'}\,}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Overview
+\end_layout
+
+\begin_layout Standard
+A Chronikis program defines a parameterized distribution over time series
+ (infinite sequences of real numeric values.) The general form is
+\begin_inset Formula 
+\[
+\mcode{def}\mcode{main}\mcode (\mathit{knownParameters}\mcode )\mcode =\mathit{TSDExpression}
+\]
+
+\end_inset
+
+where 
+\family typewriter
+\emph on
+
+\begin_inset Formula $\mathit{knownParameters}$
+\end_inset
+
+
+\family default
+\emph default
+ is a comma-separated list of variables with their types, and 
+\family typewriter
+\emph on
+
+\begin_inset Formula $\mathit{TSDExpression}$
+\end_inset
+
+
+\family default
+\emph default
+ is an expression that denotes a probability distribution over time series.
+\end_layout
+
+\begin_layout Standard
+Here are some examples for 
+\begin_inset Formula $\mathit{knownParameters}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+N:
+\begin_inset space \space{}
+\end_inset
+
+int{1,}, mu:
+\begin_inset space \space{}
+\end_inset
+
+real[N], sigma:
+\begin_inset space \space{}
+\end_inset
+
+real{0.0,}
+\family default
+
+\begin_inset Newline newline
+\end_inset
+
+This declares 
+\family typewriter
+N
+\family default
+ to be a positive integer, 
+\family typewriter
+mu
+\family default
+ to be a real-valued vector of length 
+\family typewriter
+N
+\family default
+, and 
+\family typewriter
+sigma
+\family default
+ to be a nonnegative real value.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+rho:
+\begin_inset space \space{}
+\end_inset
+
+real{0.0, 1.0}, sigma_a, sigma_h:
+\begin_inset space \space{}
+\end_inset
+
+real{0.0,}[3]
+\family default
+
+\begin_inset Newline newline
+\end_inset
+
+This declares 
+\family typewriter
+rho
+\family default
+ to be a real number between 0 and 1, and 
+\family typewriter
+sigma_h
+\family default
+ and 
+\family typewriter
+sigma_a
+\family default
+ to be length-3 vectors of nonnegative real values.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+N
+\family default
+, 
+\family typewriter
+mu
+\family default
+, etc.
+ are called 
+\emph on
+known
+\emph default
+ parameters because they are already known when the model is created, rather
+ than being inferred from training data.
+ The range constraints (e.g.
+ 
+\family typewriter
+{0.0,}
+\family default
+, 
+\family typewriter
+{0.0,1.0}
+\family default
+) on known parameters are checked when a model is trained.
+\end_layout
+
+\begin_layout Standard
+A 
+\family typewriter
+\emph on
+
+\begin_inset Formula $\mathit{TSDExpression}$
+\end_inset
+
+
+\family default
+\emph default
+ can have one of three forms:
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\emph on
+\begin_inset Formula $\mathit{variable}\mcode =\mathit{defExpr}\mcode ;\mathit{TSDExpression}_{1}$
+\end_inset
+
+
+\family default
+\emph default
+
+\begin_inset Newline newline
+\end_inset
+
+This defines the 
+\family typewriter
+\emph on
+
+\begin_inset Formula $\mathit{variable}$
+\end_inset
+
+
+\family default
+\emph default
+ to have the value 
+\family typewriter
+\emph on
+
+\begin_inset Formula $\mathit{defExpr}$
+\end_inset
+
+
+\family default
+\emph default
+ within 
+\family typewriter
+\emph on
+
+\begin_inset Formula $\mathit{TSDExpression}_{1}$
+\end_inset
+
+
+\family default
+\emph default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\emph on
+\begin_inset Formula $\mathit{variable}\mcode{\textasciitilde}\mathit{distrExpression}\mcode ;\mathit{TSDExpression}_{1}$
+\end_inset
+
+
+\family default
+\emph default
+
+\begin_inset Newline newline
+\end_inset
+
+This defines the 
+\begin_inset Formula $\mathit{variable}$
+\end_inset
+
+ as a latent (unobserved) variable having the probability distribution 
+\begin_inset Formula $\mathit{distrExpression}$
+\end_inset
+
+, with the time-series distribution 
+\begin_inset Formula $\mathit{TSDExprresion}_{1}$
+\end_inset
+
+ being conditional on the value of the 
+\begin_inset Formula $\mathit{variable}$
+\end_inset
+
+.
+ Typically 
+\begin_inset Formula $\mathit{variable}$
+\end_inset
+
+ will be a 
+\emph on
+fitted
+\emph default
+ parameter, i.e.
+ a parameter to be inferred from training data, with 
+\begin_inset Formula $\mathit{distrExpr}$
+\end_inset
+
+ being the prior distribution for 
+\begin_inset Formula $\mathit{variable}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+A function call (including use of the binary operator 
+\family typewriter
++
+\family default
+) that returns a distribution over time series.
+ Some examples:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+wn(sigma)
+\family default
+ is a white noise process with mean 0 and variance 
+\family typewriter
+sigma
+\family default
+ squared.
+ That is, it corresponds to independent normal distributions for each time
+ step.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+qp(7.0, ell, 6, 0.0, sigma_p) + constp(mu0, sigma0)
+\family default
+ is a distribution over periodic patterns of period 7, with the distribution
+ having smoothness parameter 
+\family typewriter
+ell
+\family default
+, and scale parameter 
+\family typewriter
+sigma_p
+\family default
+, and the repeating pattern having an unknown mean that is given a 
+\family typewriter
+normal(mu0,sigma0)
+\family default
+ prior.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+The above is a recursive definition, so in practice a Chronikis program
+ will have one or more variable definitions and/or variable draws, followed
+ by a function call that returns a time-series distribution.
+\end_layout
+
+\begin_layout Subsection
+Examples
+\end_layout
+
+\begin_layout Standard
+(To be written.
+ For now, look in the directory 
+\family typewriter
+compiler/Acceptance
+\family default
+.)
+\end_layout
+
+\begin_layout Subsection
+Types
+\end_layout
+
+\begin_layout Standard
+Chronikis programs are strongly and statically typed, but the only place
+ you provide types are in the parameter list of 
+\family typewriter
+main
+\family default
+.
+ The compiler infers all the remaining types.
+\end_layout
+
+\begin_layout Standard
+A type has four attributes:
+\end_layout
+
+\begin_layout Itemize
+its 
+\emph on
+element type
+\emph default
+, which is 
+\family typewriter
+int
+\family default
+ or 
+\family typewriter
+real
+\family default
+;
+\end_layout
+
+\begin_layout Itemize
+its 
+\emph on
+shape
+\emph default
+, which is a list of nonnegative integers;
+\end_layout
+
+\begin_layout Itemize
+whether or not it is a 
+\emph on
+time series
+\emph default
+, indicated with 
+\family typewriter
+$
+\family default
+; and
+\end_layout
+
+\begin_layout Itemize
+whether or not it is a 
+\emph on
+distribution
+\emph default
+, indicated with 
+\family typewriter
+~
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+The attributes apply in the order given above; thus,
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+distribution over time series of real vectors of length 
+\family typewriter
+n
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ is a valid type (
+\family typewriter
+real[n]$~
+\family default
+), but
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+time series of distributions over real vectors of length 
+\family typewriter
+n
+\family default
+
+\begin_inset Quotes erd
+\end_inset
+
+ (
+\family typewriter
+real[n]~$
+\family default
+) is 
+\emph on
+not
+\emph default
+ valid, and
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+length-
+\family typewriter
+n
+\family default
+ vector of distributions over univariate time series
+\begin_inset Quotes erd
+\end_inset
+
+ (
+\family typewriter
+real$~[n]
+\family default
+) is 
+\emph on
+not
+\emph default
+ valid.
+\end_layout
+
+\begin_layout Standard
+Some examples:
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+real
+\family default
+ is the type of real scalars.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+real[n]
+\family default
+ is the type of vectors of length 
+\family typewriter
+n
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+real[m,n]
+\family default
+ is the type of 
+\family typewriter
+m
+\family default
+-by-
+\family typewriter
+n
+\family default
+ matrices.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+real~
+\family default
+ is the type of distributions over 
+\family typewriter
+real
+\family default
+ values; an example is 
+\family typewriter
+normal(mu, sigma)
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+real[k,p]$
+\family default
+ is the type of 
+\family typewriter
+k
+\family default
+-by-
+\family typewriter
+p
+\family default
+ matrix-valued time series.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+real$~
+\family default
+ is the type of distributions over univariate time series.
+\end_layout
+
+\begin_layout Standard
+Currently, variables and parameters cannot have types that are time series
+ or distributions, but we can construct expressions having such types.
+\end_layout
+
+\begin_layout Subsection
+Data Functions
+\end_layout
+
+\begin_layout Standard
+In the following, a 
+\emph on
+signature
+\emph default
+ gives argument types in parentheses, and the corresponding return type
+ after a colon.
+ Italicized variables such as 
+\family typewriter
+\emph on
+
+\begin_inset Formula $m$
+\end_inset
+
+
+\family default
+\emph default
+ or 
+\family typewriter
+\emph on
+
+\begin_inset Formula $n$
+\end_inset
+
+
+\family default
+\emph default
+ indicate that there is one such signature for every combination of nonnegative
+ values of the variables.
+\end_layout
+
+\begin_layout Itemize
+(
+\family typewriter
++
+\family default
+) (binary operator).
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tint,\tint)\colon\tint$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\treal)\colon\treal$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\tvec n)\colon\tvec n$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Add a scalar to each element of a vector.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tvec n,\treal)\colon\tvec n$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Add a scalar to each element of a vector.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\tmat mn)\colon\tmat mn$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Add a scalar to each element of a matrix.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat mn,\treal)\colon\tmat mn$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Add a scalar to each element of a matrix.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+(
+\family typewriter
+-
+\family default
+) (unary operator).
+ Negation.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tint)\colon\tint$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal)\colon\treal$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tvec n)\colon\tvec n$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Negate each element of a vector.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat mn)\colon\tmat mn$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Negate each element of a matrix.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+(
+\family typewriter
+-
+\family default
+) (binary operator).
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tint,\tint)\colon\tint$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\treal)\colon\treal$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\tvec n)\colon\tvec n$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Subtract each element of a vector from a scalar.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tvec n,\treal)\colon\tvec n$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Subtract a scalar from each element of a vector.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\tmat mn)\colon\tmat mn$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+Subtract each element of a matrix from a scalar.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat mn,\treal)\colon\tmat mn$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Subtract a scalar from each element of a matrix.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+(
+\family typewriter
+*
+\family default
+) (binary operator).
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tint,\tint)\colon\tint$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\treal)\colon\treal$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\tvec n)\colon\tvec n$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Multiply each element of a vector by a scalar.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tvec n,\treal)\colon\tvec n$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Multiply each element of a vector by a scalar.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\tmat mn)\colon\tmat mn$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Multiply each element of a matrix by a scalar.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat mn,\treal)\colon\tmat mn$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Multiply each element of a matrix by a scalar.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\trrr mnp)\colon\trrr mnp$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Multiply each element of a 3D array by a scalar.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\trrr mnp,\treal)\colon\trrr mnp$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Multiply each element of a 3D array by a scalar.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+(
+\family typewriter
+/
+\family default
+) (binary operator).
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\treal)\colon\treal$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\tvec n)\colon\tvec n$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Divide a scalar by each element of a vector.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tvec n,\treal)\colon\tvec n$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Divide each element of a vector by a scalar.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\tmat mn)\colon\tmat mn$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Divide a scalar by each element of a matrix.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat mn,\treal)\colon\tmat mn$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+Divide each element of a matrix by a scalar.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+(^
+\family default
+) (binary operator).
+ Exponentiation.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\tint)\colon\treal$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+(
+\family typewriter
+[]
+\family default
+) Array indexing, 1-based.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tvec n,\tint)\colon\treal$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+ 
+\family typewriter
+
+\begin_inset Formula $\arri ai$
+\end_inset
+
+
+\family default
+ is element 
+\family typewriter
+\emph on
+
+\begin_inset Formula $i$
+\end_inset
+
+
+\family default
+\emph default
+ of vector 
+\family typewriter
+\emph on
+
+\begin_inset Formula $a$
+\end_inset
+
+
+\family default
+\emph default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat mn,\tint)\colon\tvec n$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+ 
+\family typewriter
+
+\begin_inset Formula $\arri ai$
+\end_inset
+
+
+\family default
+ is row 
+\begin_inset Formula $i$
+\end_inset
+
+ of matrix 
+\begin_inset Formula $a$
+\end_inset
+
+ (as a vector).
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat mn,\tint,\tint)\colon\treal$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\arrij aij$
+\end_inset
+
+ is row 
+\begin_inset Formula $i$
+\end_inset
+
+, column 
+\begin_inset Formula $j$
+\end_inset
+
+ of matrix 
+\begin_inset Formula $a$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+etc.
+ for higher-dimensional arrays.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+- (
+\family typewriter
+{}
+\family default
+) Array enumeration.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat mn,\ldots,\tmat mn)\colon\trrr kmn$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\mbox{\texttt{\{}}M_{1},\ldots,M_{k}\mbox{\texttt{\}}}$
+\end_inset
+
+ is the 3D array 
+\begin_inset Formula $a$
+\end_inset
+
+ such that 
+\begin_inset Formula $\arri ai=M_{i}$
+\end_inset
+
+ for 
+\begin_inset Formula $1\leq i\leq k$
+\end_inset
+
+.
+ It is required that 
+\begin_inset Formula $k\geq1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\trrr mnp,\ldots,\trrr mnp)\colon\trrrr kmnp$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\mbox{\texttt{\{}}A_{1},\ldots,A_{k}\mbox{\texttt{\}}}$
+\end_inset
+
+ is the 4D array 
+\begin_inset Formula $a$
+\end_inset
+
+ such that 
+\begin_inset Formula $\arri ai=A_{i}$
+\end_inset
+
+ for 
+\begin_inset Formula $1\leq i\leq k$
+\end_inset
+
+.
+ It is required that 
+\begin_inset Formula $k\geq1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+etc.
+ for higher dimensions.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+blocks4
+\family default
+.
+ Create a matrix from four submatrices.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat{m_{1}}{n_{1}},\tmat{m_{1}}{n_{2}},\tmat{m_{2}}{n_{1}},\tmat{m_{2}}{n_{2}})\colon\tmat mn$
+\end_inset
+
+
+\family default
+
+\begin_inset Newline newline
+\end_inset
+
+where 
+\begin_inset Formula $m=m_{1}+m_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $n=n_{1}+n_{2}$
+\end_inset
+
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\call{blocks4}{A,B,C,D}$
+\end_inset
+
+
+\family default
+ is the matrix 
+\begin_inset Formula 
+\[
+\left(\begin{array}{cc}
+A & B\\
+C & D
+\end{array}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\tvec n,\tvec m,\tmat mn)\colon\tmat{m+1}{n+1}$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{blocks4}{a,b,c,D}=\call{blocks4}{A,B,C,D}$
+\end_inset
+
+
+\family default
+ where
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\emph on
+\begin_inset Formula $A$
+\end_inset
+
+
+\family default
+\emph default
+ is the 
+\begin_inset Formula $1\times1$
+\end_inset
+
+ matrix created from scalar 
+\begin_inset Formula $a$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\emph on
+\begin_inset Formula $B$
+\end_inset
+
+
+\family default
+\emph default
+ is the 
+\begin_inset Formula $1\times n$
+\end_inset
+
+ matrix created from vector 
+\begin_inset Formula $b$
+\end_inset
+
+, and
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\emph on
+\begin_inset Formula $C$
+\end_inset
+
+
+\family default
+\emph default
+ is the 
+\begin_inset Formula $m\times1$
+\end_inset
+
+ matrix created from vector 
+\begin_inset Formula $c$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat mn,\tvec m,\tvec n,\treal)\colon\tmat{m+1}{n+1}$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{blocks4}{A,b,c,d}=\call{blocks4}{A,B,C,D}$
+\end_inset
+
+
+\family default
+ where
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\emph on
+\begin_inset Formula $B$
+\end_inset
+
+
+\family default
+\emph default
+ is the 
+\family typewriter
+\emph on
+
+\begin_inset Formula $m\times1$
+\end_inset
+
+
+\family default
+\emph default
+ matrix created from vector 
+\family typewriter
+\emph on
+
+\begin_inset Formula $b$
+\end_inset
+
+
+\family default
+\emph default
+,
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\emph on
+\begin_inset Formula $C$
+\end_inset
+
+
+\family default
+\emph default
+ is the 
+\begin_inset Formula $1\times n$
+\end_inset
+
+ matrix created from vector 
+\begin_inset Formula $c$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\emph on
+\begin_inset Formula $D$
+\end_inset
+
+
+\family default
+\emph default
+ is the 
+\begin_inset Formula $1\times1$
+\end_inset
+
+ matrix created from scalar 
+\begin_inset Formula $d$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+diag
+\family default
+.
+ Create a diagonal or block-diagonal matrix.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $()\colon\tmat 00$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+diag()
+\family default
+ is the 
+\begin_inset Formula $0\times0$
+\end_inset
+
+ matrix.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\ldots,\treal)\colon\tmat kk$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{diag}{x_{1},\ldots,x_{k}}=\call{diag}{\call{vec}{x_{1},\ldots,x_{k}}}$
+\end_inset
+
+
+\family default
+ for 
+\begin_inset Formula $k\geq1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tvec n)\colon\tmat nn$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{diag}v$
+\end_inset
+
+
+\family default
+ is the diagonal matrix with 
+\family typewriter
+\emph on
+
+\begin_inset Formula $v$
+\end_inset
+
+
+\family default
+\emph default
+ as its diagonal.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat{m_{1}}{n_{1}},\ldots,\tmat{m_{k}}{n_{k}})\colon\tmat mn$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+where 
+\begin_inset Formula $m=m_{1}+\cdots+m_{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $n=n_{1}+\cdots+n_{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $k\geq1$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{diag}{M_{1},\ldots,M_{k}}$
+\end_inset
+
+
+\family default
+ is the block diagonal matrix having 
+\begin_inset Formula $M_{1},\ldots,M_{k}$
+\end_inset
+
+ as the blocks.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\trrr kmn)\colon\tmat{km}{kn}$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{diag}A=\call{diag}{\arri A1,\ldots,\arri Ak}$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(T_{1},\ldots,T_{k})\colon\tmat mn$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+where each 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is one of 
+\family typewriter
+
+\begin_inset Formula $\treal$
+\end_inset
+
+
+\family default
+, 
+\family typewriter
+
+\begin_inset Formula $\tvec{n_{i}}$
+\end_inset
+
+
+\family default
+, 
+\family typewriter
+
+\begin_inset Formula $\tmat{m_{i}}{n_{i}}$
+\end_inset
+
+
+\family default
+, or 
+\begin_inset Formula $\trrr{p_{i}}{m_{i}}{n_{i}}$
+\end_inset
+
+, and 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+ are computed from the shapes of the types 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\call{diag}{a_{1},\ldots,a_{k}}=\call{diag}{M_{1},\ldots,M_{k}}$
+\end_inset
+
+
+\family default
+ where 
+\begin_inset Formula $M_{i}$
+\end_inset
+
+ is
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $\call{diag}{a_{i}}$
+\end_inset
+
+
+\family default
+ if 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is 
+\family typewriter
+
+\begin_inset Formula $\treal$
+\end_inset
+
+
+\family default
+ or 
+\family typewriter
+
+\begin_inset Formula $\tvec{n_{i}}$
+\end_inset
+
+
+\family default
+ or 
+\family typewriter
+
+\begin_inset Formula $\trrr{p_{i}}{m_{i}}{n_{i}}$
+\end_inset
+
+
+\family default
+;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $a_{i}$
+\end_inset
+
+ if 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is 
+\family typewriter
+
+\begin_inset Formula $\tmat{m_{i}}{n_{i}}$
+\end_inset
+
+
+\family default
+\emph on
+.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+diag_sqr
+\family default
+.
+ Signatures: same as 
+\family typewriter
+diag
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{diag\_sqr}{x_{1},\ldots,x_{k}}=\call{diag}{\call{square}{x_{1}},\ldots,\call{square}{x_{k}}}$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+div
+\family default
+ (binary operator).
+ Integer division.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tint,\tint)\colon\tint$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+It is required that 
+\begin_inset Formula $b\neq0$
+\end_inset
+
+ in the expression 
+\begin_inset Formula $a\,\mbox{\texttt{div}}\,b$
+\end_inset
+
+.
+ Rounds down for nonnegative arguments.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+i2r
+\family default
+.
+ Convert an 
+\family typewriter
+int
+\family default
+ to a 
+\family typewriter
+real
+\family default
+.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tint)\colon\treal$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+mat11
+\family default
+.
+ Create a 
+\begin_inset Formula $1\times1$
+\end_inset
+
+ matrix.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal)\colon\tmat 11$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+mat22
+\family default
+.
+ Create a 
+\begin_inset Formula $2\times2$
+\end_inset
+
+ matrix.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\treal,\treal,\treal)\colon\tmat 22$
+\end_inset
+
+
+\family default
+.
+\family typewriter
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\call{mat22}{a,b,c,d}$
+\end_inset
+
+
+\family default
+ is the matrix
+\begin_inset Formula 
+\[
+\left(\begin{array}{cc}
+a & b\\
+c & d
+\end{array}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+negate
+\family default
+.
+ Same as unary (
+\family typewriter
+-
+\family default
+).
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+sqrt
+\family default
+.
+ Square-root applied element-wise.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal)\colon\treal$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tvec n)\colon\tvec n$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat mm)\colon\tmat mn$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+etc.
+ for higher dimensions.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+square
+\family default
+.
+ Square each element.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal)\colon\treal$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tvec n)\colon\tvec n$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat mn)\colon\tmat mn$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+etc.
+ for higher dimensions.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+to_matrix
+\family default
+.
+ Convert a vector to a matrix.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tvec n)\colon\tmat n1$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+transp
+\family default
+.
+ Matrix transpose.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat mn)\colon\tmat nm$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+vec
+\family default
+.
+ Create a vector.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\ldots,\treal)\colon\tvec k$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{vec}{x_{1},\ldots,x_{k}}$
+\end_inset
+
+
+\family default
+ is the vector of length 
+\begin_inset Formula $k\geq0$
+\end_inset
+
+ with the indicated elements.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tvec{n_{1}},\ldots,\tvec{n_{k}})\colon\tvec n$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+where 
+\begin_inset Formula $n=n_{1}+\cdots+n_{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $k\geq1$
+\end_inset
+
+
+\family typewriter
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\call{vec}{v_{1},\ldots,v_{k}}$
+\end_inset
+
+
+\family default
+ is the result of appending vectors 
+\begin_inset Formula $v_{1}$
+\end_inset
+
+ through 
+\begin_inset Formula $v_{k}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(T_{1},\ldots,T_{k})\colon\tvec n$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+where each 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is 
+\family typewriter
+real
+\family default
+ or 
+\family typewriter
+
+\begin_inset Formula $\tvec{n_{i}}$
+\end_inset
+
+
+\family default
+, and 
+\begin_inset Formula $n$
+\end_inset
+
+ is computed from the shapes of the types 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{vec}{a_{1},\ldots,a_{k}}=\call{vec}{v_{1},\ldots,v_{k}}$
+\end_inset
+
+
+\family default
+ where 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ is
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+the length-one vector 
+\family typewriter
+
+\begin_inset Formula $\call{vec}{a_{i}}$
+\end_inset
+
+
+\family default
+ if 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is 
+\family typewriter
+real
+\family default
+,
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\emph on
+\begin_inset Formula $a_{i}$
+\end_inset
+
+
+\family default
+\emph default
+ if 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ is 
+\family typewriter
+
+\begin_inset Formula $\tvec{n_{i}}$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+vec0
+\family default
+.
+ Create a vector of zeroes.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tint)\colon\tvec n$
+\end_inset
+
+
+\family default
+
+\begin_inset Newline newline
+\end_inset
+
+where 
+\begin_inset Formula $n$
+\end_inset
+
+ is the argument.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{vec0}n$
+\end_inset
+
+
+\family default
+ is the length-
+\begin_inset Formula $n$
+\end_inset
+
+ vector 
+\family typewriter
+
+\begin_inset Formula $\call{vec}{0,\ldots,0}$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Data Distributions
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+certainly
+\family default
+.
+ Degenerate distribution that assigns probability 1 to its argument.
+ An example usage would be
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+x ~ uniform(0.0,1.0);
+\begin_inset Newline newline
+\end_inset
+
+y ~ uniform(0.0, 2.0);
+\begin_inset Newline newline
+\end_inset
+
+certainly(x+y)
+\begin_inset Newline newline
+\end_inset
+
+
+\family default
+which is the distribution of the sum of draws from a 
+\begin_inset Formula $U(0,1)$
+\end_inset
+
+ and a 
+\begin_inset Formula $U(0,2)$
+\end_inset
+
+ distribution.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal)\colon\treald$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tvec n)\colon\tvecd n$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tmat mn)\colon\tmatd mn$
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+etc.
+ for higher dimensions.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+exponential_m
+\family default
+.
+ Exponential distribution parameterized by mean.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal)\colon\treald$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{exponential\_m}{\mu}$
+\end_inset
+
+
+\family default
+ is the exponential distribution with mean
+\emph on
+ 
+\begin_inset Formula $\mu$
+\end_inset
+
+, 
+\emph default
+which must be positive.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+exponential_mt
+\family default
+.
+ Truncated exponential distribution parameterized by mean and upper bound.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\treal)\colon\treald$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{exponential\_mt}{\mu,u}$
+\end_inset
+
+
+\family default
+ is the truncated exponential distribution with upper bound 
+\begin_inset Formula $u$
+\end_inset
+
+ and mean 
+\begin_inset Formula $\mu$
+\end_inset
+
+.
+ It is required that 
+\begin_inset Formula $u>\mu>0$
+\end_inset
+
+.
+ Note that 
+\family typewriter
+
+\begin_inset Formula $\call{exponential\_mt}{\mu,u}$
+\end_inset
+
+
+\family default
+ is 
+\emph on
+not
+\emph default
+ the same as taking 
+\begin_inset Formula $\call{exponential\_m}{\mu}$
+\end_inset
+
+ and truncating above at 
+\begin_inset Formula $u$
+\end_inset
+
+, as the mean of that distribution is less than 
+\family typewriter
+\emph on
+
+\begin_inset Formula $\mu$
+\end_inset
+
+
+\family default
+\emph default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+exponential_r
+\family default
+.
+ Exponential distribution parameterized by rate.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal)\colon\treald$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{exponential\_r}{\theta}=\call{exponential\_m}{1/\theta}$
+\end_inset
+
+
+\family default
+.
+ It is required that 
+\begin_inset Formula $\theta>0$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+exponential_rt
+\family default
+.
+ Truncated exponential distribution parameterized by rate and upper bound.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\treal)\colon\treald$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{exponential\_rt}{\theta,u}$
+\end_inset
+
+
+\family default
+ is the distribution 
+\family typewriter
+
+\begin_inset Formula $\call{exponential\_r}{\theta}$
+\end_inset
+
+
+\family default
+ truncated above at 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ Note that its mean is 
+\emph on
+not 
+\begin_inset Formula $1/\theta$
+\end_inset
+
+
+\emph default
+, due to the truncation.
+ It is required that 
+\begin_inset Formula $\theta>0$
+\end_inset
+
+ and 
+\begin_inset Formula $u>0$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+half_cauchy
+\family default
+.
+ Cauchy distribution truncated below at 0.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal)\colon\treald$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\call{half\_cauchy}s$
+\end_inset
+
+ is the Cauchy distribution with scale parameter 
+\begin_inset Formula $s>0$
+\end_inset
+
+, truncated below at 0.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+half_normal
+\family default
+.
+ 0-mean normal distribution truncated below at 0.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal)\colon\treald$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{half\_normal}{\sigma}$
+\end_inset
+
+
+\family default
+ is the normal distribution with mean 
+\begin_inset Formula $0$
+\end_inset
+
+ and standard deviation 
+\begin_inset Formula $\sigma>0$
+\end_inset
+
+, truncated below at 
+\begin_inset Formula $0$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+normal
+\family default
+.
+ Univariate normal distribution.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\treal)\colon\treald$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{normal}{\mu,\sigma}$
+\end_inset
+
+
+\family default
+ is the normal (Gaussian) distribution with mean 
+\begin_inset Formula $\mu$
+\end_inset
+
+ and standard deviation 
+\begin_inset Formula $\sigma>0$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+uniform
+\family default
+.
+ Uniform distribution.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\treal)\colon\treald$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{uniform}{l,u}$
+\end_inset
+
+
+\family default
+ is the uniform distribution over the interval from 
+\begin_inset Formula $l$
+\end_inset
+
+ to 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ It is required that 
+\begin_inset Formula $l<u$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Time-series Distributions
+\end_layout
+
+\begin_layout Standard
+In the following we write 
+\begin_inset Formula $y_{t}$
+\end_inset
+
+ for the value of a time series at time 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ Note that time series start at 
+\begin_inset Formula $t=1$
+\end_inset
+
+, so when we refer to 
+\begin_inset Formula $y_{0}$
+\end_inset
+
+ below, this is a latent "one step before the first" value.
+\end_layout
+
+\begin_layout Itemize
+(
+\family typewriter
++
+\family default
+) (binary op).
+ Sum of time-series distributions.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tsd,\tsd)\colon\tsd$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+The distribution 
+\family typewriter
+\emph on
+
+\begin_inset Formula $d_{1}\,\mbox{\texttt{+}}\,d_{2}$
+\end_inset
+
+
+\family default
+\emph default
+ is equivalent to 
+\begin_inset Formula 
+\begin{align*}
+\upsilon_{1} & \sim d_{1}\\
+\upsilon_{2} & \sim d_{2}\\
+y_{t} & =\upsilon_{1t}+\upsilon_{2t}\quad\mbox{for all }t\geq1
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+accum
+\family default
+.
+ Accumulate.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\tsd,\treal,\treal)\colon\tsd$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+The distribution 
+\family typewriter
+
+\begin_inset Formula $\call{accum}{d,\mu,\sigma}$
+\end_inset
+
+
+\family default
+ is eqivalent to 
+\begin_inset Formula 
+\begin{align*}
+\delta & \sim d\\
+y_{0} & \sim\call{normal}{\mu,\sigma}\\
+y_{t} & =y_{t-1}+\delta_{t}\quad\mbox{for all }t\geq1
+\end{align*}
+
+\end_inset
+
+Put another way, the time series of differences 
+\begin_inset Formula $y_{t}-y_{t-1}$
+\end_inset
+
+ has the distribution 
+\begin_inset Formula $d$
+\end_inset
+
+.
+ It is required that 
+\begin_inset Formula $\sigma>0$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+ar1
+\family default
+.
+ An AR(1) process.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family typewriter
+\begin_inset Formula $(\treal,\treal,\treal)\colon\tsd$
+\end_inset
+
+
+\family default
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+
+\begin_inset Formula $\call{ar1}{\phi,\sigma_{q},\sigma_{0}}$
+\end_inset
+
+
+\family default
+ is equivalent to 
+\begin_inset Formula 
+\begin{align*}
+y_{0} & \sim\text{\call{normal}{0,\sigma_{0}}}\\
+y_{t} & \sim\text{\call{normal}{\phi y_{t-1},\sigma_{q}}}\quad\mbox{for all }t\geq1
+\end{align*}
+
+\end_inset
+
+If 
+\begin_inset Formula $\sigma_{0}^{2}=\sigma_{q}^{2}/\left(1-\phi^{2}\right)$
+\end_inset
+
+ then this distribution is a stationary process with mean 
+\begin_inset Formula $0$
+\end_inset
+
+, standard deviation 
+\begin_inset Formula $\sigma_{0}$
+\end_inset
+
+, and correlation 
+\begin_inset Formula $\phi^{k}$
+\end_inset
+
+ between 
+\begin_inset Formula $y_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{t+k}$
+\end_inset
+
+.
+ It is required that 
+\family typewriter
+\emph on
+
+\begin_inset Formula $0<\phi<1$
+\end_inset
+
+
+\family default
+, 
+\begin_inset Formula $\sigma_{q}>0$
+\end_inset
+
+,
+\emph default
+ and 
+\emph on
+
+\begin_inset Formula $\sigma_{0}>0$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+constp
+\family default
+.
+ Constant time series.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $(\treal,\treal)\colon\tsd$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\call{constp}{\mu,\sigma}$
+\end_inset
+
+ is equivalent to 
+\begin_inset Formula 
+\begin{align*}
+y_{0} & \sim\call{normal}{\mu,\sigma}\\
+y_{t} & =y_{0}\quad\mbox{for all }t\geq1
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+It is required that 
+\begin_inset Formula $\sigma>0$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+qp
+\family default
+.
+ Quasi-periodic process.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $(\treal,\treal,\tint,\treal,\treal)\colon\tsd$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\call{qp}{P,\ell,n,\rho,\sigma}$
+\end_inset
+
+ is a distribution over quasiperiodic time series.
+ The arguments 
+\begin_inset Formula $P$
+\end_inset
+
+, 
+\begin_inset Formula $\ell$
+\end_inset
+
+, and 
+\begin_inset Formula $n$
+\end_inset
+
+ must currently be numeric literals, e.g.
+ 
+\begin_inset Formula $\call{qp}{7.0,0.8,6,\rho,\sigma}$
+\end_inset
+
+.
+ It is required that 
+\begin_inset Formula $P>0$
+\end_inset
+
+, 
+\begin_inset Formula $\ell>0$
+\end_inset
+
+, 
+\begin_inset Formula $0\leq n<P$
+\end_inset
+
+, 
+\begin_inset Formula $0\leq\rho\leq1$
+\end_inset
+
+, and 
+\begin_inset Formula $\sigma>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The marginal distribution for 
+\begin_inset Formula $y_{t}$
+\end_inset
+
+ is 
+\begin_inset Formula $\call{normal}{0,\sigma}$
+\end_inset
+
+.
+ Additionally, the periodic pattern itself is centered around 0.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $P$
+\end_inset
+
+ is the period; it does not need to be an integer.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\ell$
+\end_inset
+
+ gives a smoothness length scale; 
+\begin_inset Formula $y_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{t+k}$
+\end_inset
+
+ are positively correlated for 
+\begin_inset Formula $\left|k\right|$
+\end_inset
+
+ less than about 
+\begin_inset Formula $\ell P/4$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Nonzero values for 
+\begin_inset Formula $\rho$
+\end_inset
+
+ allow the periodic pattern to change somewhat from one period to another.
+ Specifically, if 
+\begin_inset Formula $P$
+\end_inset
+
+ is an integer then 
+\begin_inset Formula $y_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{t+P}$
+\end_inset
+
+ have a correlation coefficient of 
+\begin_inset Formula $\phi^{P}$
+\end_inset
+
+, where 
+\begin_inset Formula $\phi=\sqrt{1-\rho^{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $d$
+\end_inset
+
+ is the minimum required degrees of freedom for the periodic pattern.
+ This is an implementation wart that will be removed in a later release
+ of Chronikis; for now you can just set it to the minimum of 10 and 
+\begin_inset Formula $P-1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+This time-series distribution closely approximates a one-dimensional Gaussian
+ process with covariance function 
+\begin_inset Formula 
+\[
+\kappa(x)=\sigma^{2}\phi^{x}\exp\left(-2\left(\frac{\sin\left(\pi x\right)}{\ell}\right)^{2}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+rw
+\family default
+.
+ Random-walk process.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $(\treal,\treal,\treal)\colon\tsd$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset Formula $\call{rw}{\mu_{0},\sigma_{0},\sigma_{q}}$
+\end_inset
+
+ is equivalent to 
+\begin_inset Formula 
+\begin{align*}
+y_{0} & \sim\call{normal}{\mu_{0},\sigma_{0}}\\
+y_{t} & \sim\call{normal}{y_{t-1},\sigma_{q}}\quad\mbox{for all }t\geq1
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+It is required that 
+\begin_inset Formula $\sigma_{0}>0$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma_{q}>0$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+ssm
+\family default
+.
+ General form for creating a linear state-space model.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $(\tvec m,\treal,\tmat mm,\tmat mm,\tvec m,\tmat mm)\colon\tsd$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\call{ssm}{z,h,T,Q,a_{0},P_{0}}$
+\end_inset
+
+ specifies the following linear state-space model:
+\begin_inset Formula 
+\begin{align*}
+\alpha_{0} & \sim\call{mvnormal}{a_{0},P_{0}}\\
+\alpha_{t} & \sim\call{mvnormal}{\alpha_{t-1},Q}\quad\mbox{for all }t\geq1\\
+y_{t} & \sim\call{normal}{z'\alpha_{t},\sigma}\quad\mbox{for all }t\geq1\\
+\sigma & =\sqrt{h}
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $\call{mvnormal}{\mu,\Sigma}$
+\end_inset
+
+ is the multivariate normal distribution with mean vector 
+\begin_inset Formula $\mu$
+\end_inset
+
+ and covariance matrix 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+.
+ It is required that 
+\begin_inset Formula $h>0$
+\end_inset
+
+ and 
+\begin_inset Formula $T$
+\end_inset
+
+, 
+\begin_inset Formula $Q$
+\end_inset
+
+, and 
+\begin_inset Formula $P$
+\end_inset
+
+ be nonnegative definite matrices.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+wn
+\family default
+.
+ White noise.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $(\treal)\colon\tsd$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\call{wn}{\sigma}$
+\end_inset
+
+ is equivalent to 
+\begin_inset Formula 
+\[
+y_{t}\sim\call{normal}{0,\sigma}\quad\mbox{for all }t\geq1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+It is required that 
+\begin_inset Formula $\sigma>0$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Subsection
+Formal Syntax
+\end_layout
+
+\begin_layout Standard
+In the following,
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $*$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ means 
+\emph on
+zero
+\emph default
+ or more instances separated by commas,
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $+$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ means 
+\emph on
+one
+\emph default
+ or more instances separated by commas,
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $?$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ means optional (zero or one instance),
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $\mid$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ separates alternatives, and
+\end_layout
+
+\begin_layout Itemize
+text in typewriter font is literal text.
+\end_layout
+
+\begin_layout Standard
+Here is the grammar:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\mathit{Program} & \coloneqq\mcode{def}\mcode{main}\mcode (\mathit{Parms}\mcode )\mcode =\mathit{TSDExpr}\\
+\mathit{TSDExpr} & \coloneqq\mathit{Expr}\\
+ & \qquad\mbox{(\emph{type must be }\texttt{real\$\textasciitilde})}\\
+\mathit{Parms} & \coloneqq\mathit{ParmGroup}{*}\\
+\mathit{ParmGroup} & \coloneqq\mathit{Identifier}{+}\mcode :\mathit{Type}\\
+\mathit{Expr} & \coloneqq\mathit{DefExpr}\mid\mathit{DrawExpr}\mid\mathit{OpExpr}\\
+\mathit{DefExpr} & \coloneqq\mathit{Variable}\mcode =\mathit{OpExpr}\mcode ;\mathit{Expr}\\
+\mathit{DrawExpr} & \coloneqq\mathit{Variable}\mcode{\textasciitilde}\mathit{OpExpr}\mcode ;\mathit{Expr}\\
+ & \qquad\mbox{(\emph{the OpExpr must have a distribution type})}\\
+\mathit{OpExpr} & \coloneqq\mathit{Term}\mid\mathit{UnOp}\,\mathit{OpExpr}\mid\mathit{OpExpr}\,\mathit{BinOp}\,\mathit{OpExpr}\mid\mathit{OpExpr}\,\mathit{Index}\\
+\mathit{UnOp} & \coloneqq\mcode +\mid\mcode -\\
+\mathit{BinOp} & \coloneqq\mcode +\mid\mcode -\mid\mcode *\mid\mcode /\mid\mcode{div}\mid\mcode{\mathcircumflex}\\
+\mathit{Index} & \coloneqq\mcode [\mathit{IExpr}{+}\mcode ]\\
+\mathit{IExpr} & \coloneqq\mathit{Expr}\\
+ & \qquad\mbox{(\emph{type must be }\texttt{int})}\\
+\mathit{Term} & \coloneqq\mathit{Variable}\mid\mathit{Literal}\mid\mcode (\mathit{Expr}\mcode )\mid\mathit{FctApp}\mid\mathit{Array}\\
+\mathit{FctApp} & \coloneqq\mathit{FctName}\mcode (\mathit{Expr}{*}\mcode )\\
+\mathit{Array} & \coloneqq\mcode{\{}\mathit{Expr}{+}\mcode{\}}\\
+ & \qquad\mbox{(\emph{all entries must have the same type})}\\
+\mathit{Literal} & \coloneqq\mathit{IntegerLit}\mid\mathit{RealLit}\\
+\mathit{Type} & \coloneqq\mathit{ElemType}\,\mathit{Bounds}{?}\,\mathit{Shape}{?}\\
+\mathit{ElemType} & \coloneqq\mcode{int}\mid\mcode{real}\\
+\mathit{Bounds} & \coloneqq\mcode{\{}\mathit{OpExpr}{?}\mcode ,\mathit{OpExpr}{?}\mcode{\}}\\
+\mathit{Shape} & \coloneqq\mcode [\mathit{OpExpr}{+}\mcode ]
+\end{align*}
+
+\end_inset
+
+Operator precedence, from lowest to highest, is
+\end_layout
+
+\begin_layout Itemize
+binary 
+\family typewriter
++
+\family default
+, binary 
+\family typewriter
+-
+\family default
+ (left associative);
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\mcode *$
+\end_inset
+
+, 
+\begin_inset Formula $\mcode /$
+\end_inset
+
+, 
+\begin_inset Formula $\mcode{div}$
+\end_inset
+
+ (left associative);
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+^
+\family default
+ (right associative);
+\end_layout
+
+\begin_layout Itemize
+unary 
+\begin_inset Formula $\mcode +$
+\end_inset
+
+, unary 
+\family typewriter
+-
+\family default
+;
+\end_layout
+
+\begin_layout Itemize
+indexing.
+\end_layout
+
+\begin_layout Standard
+The following are tokens, so there is no whitespace within them: 
+\begin_inset Formula 
+\begin{align*}
+\mathit{IntegerLit} & \coloneqq\mathit{Digits}\\
+\mathit{RealLit} & \coloneqq\mathit{Digits}\,\mathit{Fraction}{?}\mathit{Exponent}{?}\\
+ & \qquad\mbox{(\emph{must have at least one of Fraction or Exponent})}\\
+\mathit{Fraction} & \coloneqq\mcode .\mathit{Digits}\\
+\mathit{Exponent} & \coloneqq\mathit{ExpChar}\,\mathit{Sign}{?}\,\mathit{Digits}\\
+\mathit{ExpChar} & \coloneqq\mcode E\mid\mcode e\\
+\mathit{Sign} & \coloneqq\mcode +\mid\mcode -\\
+\mathit{Digits} & \coloneqq\mathit{Digit}{+}\\
+\mathit{Digit} & \coloneqq\mcode 0\mid\cdots\mid\mcode 9\\
+\mathit{Variable} & \coloneqq\mathit{Identifier}\\
+\mathit{FctName} & \coloneqq\mathit{Identifier}\\
+\mathit{Identifier} & \coloneqq\mathit{IdentChar0}\,\mathit{IdentChar}{*}\\
+\mathit{IdentChar0} & \coloneqq\mcode a\mid\cdots\mid\mcode z\mid\mcode A\mid\cdots\mid\mcode Z\\
+\mathit{IdentChar} & \coloneqq\mathit{IdentChar0}\mid\mathit{Digit}\mid\mcode{\_}
+\end{align*}
+
+\end_inset
+
+Note that there is no automatic promotion of integers to reals.
+\end_layout
+
+\end_body
+\end_document

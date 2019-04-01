@@ -1,0 +1,1365 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Simplifying 
+\family typewriter
+diag
+\family default
+ expressions
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+copyright
+\end_layout
+
+\end_inset
+
+ 2019, Adobe Inc.
+ This document is licensed to you under the Apache License, Version 2.0.
+ You may obtain a copy of the license at 
+\begin_inset CommandInset href
+LatexCommand href
+name "http://www.apache.org/licenses/LICENSE-2.0"
+target "http://www.apache.org/licenses/LICENSE-2.0"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+Kevin S.
+ Van Horn
+\begin_inset Newline newline
+\end_inset
+
+Adobe Inc.
+\end_layout
+
+\begin_layout Section
+Definition of 
+\family typewriter
+diag
+\end_layout
+
+\begin_layout Standard
+We use the following definitions:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\mathbb{R}_{0}$
+\end_inset
+
+ is the set of scalars (real numbers), 
+\begin_inset Formula $\mathbb{R}_{1}$
+\end_inset
+
+ is the set of vectors over 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathbb{R}_{2}$
+\end_inset
+
+ is the set of matrices over 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+, and 
+\begin_inset Formula $\mathbb{R}_{3}$
+\end_inset
+
+ is the set of three-dimensional arrays over 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $(v\circ w)$
+\end_inset
+
+ is the vector obtained by appending vectors 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $w$
+\end_inset
+
+, and 
+\begin_inset Formula $(s\colon v)$
+\end_inset
+
+ is the vector obtained by prepending scalar 
+\begin_inset Formula $s$
+\end_inset
+
+ to vector 
+\begin_inset Formula $v$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(A\bullet B\right)$
+\end_inset
+
+ is the block diagonal matrix whose blocks are matrices 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $B$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $\bullet$
+\end_inset
+
+ is an associative operator whose left and right identity is the 
+\begin_inset Formula $0\times0$
+\end_inset
+
+ matrix.
+\end_layout
+
+\begin_layout Itemize
+The operation 
+\begin_inset Formula $\delta$
+\end_inset
+
+ converts scalars, vectors, and three-dimensional arrays to matrices: for
+ 
+\begin_inset Formula $s\in\mathbb{R}_{0}$
+\end_inset
+
+, 
+\begin_inset Formula $v\in\mathbb{R}_{1}$
+\end_inset
+
+, and 
+\begin_inset Formula $\alpha\in\mathbb{R}_{3}$
+\end_inset
+
+, we define
+\begin_inset Formula 
+\begin{align*}
+\delta(s) & =\mbox{the }1\times1\mbox{ matrix with single element }s\\
+\delta(v) & =\mbox{the diagonal matrix with diagonal }v\\
+\delta(\alpha) & =\alpha_{1}\bullet\alpha_{2}\bullet\ldots\bullet\alpha_{n}
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $n$
+\end_inset
+
+ is the length of 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ in its first dimension.
+\end_layout
+
+\begin_layout Standard
+We define the function 
+\begin_inset Formula $\mathrm{diag}$
+\end_inset
+
+ as follows:
+\end_layout
+
+\begin_layout Enumerate
+The domain of 
+\begin_inset Formula $\mathrm{diag}$
+\end_inset
+
+ is all 
+\begin_inset Formula $n$
+\end_inset
+
+-tuples 
+\begin_inset Formula $\left(x_{1},\ldots,x_{n}\right)$
+\end_inset
+
+, 
+\begin_inset Formula $n\geq0$
+\end_inset
+
+, such that each 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is a member of one of 
+\begin_inset Formula $\mathbb{R}_{0}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathbb{R}_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathbb{R}_{2}$
+\end_inset
+
+, or 
+\begin_inset Formula $\mathbb{R}_{3}$
+\end_inset
+
+.
+ The range is 
+\begin_inset Formula $\mathbb{R}_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $n\geq0$
+\end_inset
+
+, 
+\begin_inset Formula $s\in\mathbb{R}_{0}$
+\end_inset
+
+, 
+\begin_inset Formula $v\in\mathbb{R}_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $A\in\mathbb{R}_{2}$
+\end_inset
+
+, and 
+\begin_inset Formula $\alpha\in\mathbb{R}_{3}$
+\end_inset
+
+, then 
+\begin_inset Formula 
+\begin{align*}
+\mathrm{diag}() & =\mbox{the }0\times0\mbox{ matrix}\\
+\mathrm{diag}\left(s,x_{1},\ldots,x_{n}\right) & =\delta(x)\bullet\mathrm{diag}\left(x_{1},\ldots,x_{n}\right)\\
+\mathrm{diag}\left(v,x_{1},\ldots,x_{n}\right) & =\delta(v)\bullet\mathrm{diag}\left(x_{1},\ldots,x_{n}\right)\\
+\mathrm{diag}\left(A,x_{1},\ldots,x_{n}\right) & =A\bullet\mathrm{diag}\left(x_{1},\ldots,x_{n}\right)\\
+\mathrm{diag}\left(\alpha,x_{1},\ldots,x_{n}\right) & =\delta\left(\alpha\right)\bullet\mathrm{diag}\left(x_{1},\ldots,x_{n}\right).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Normal form 
+\end_layout
+
+\begin_layout Definition*
+An expression 
+\begin_inset Formula $A$
+\end_inset
+
+ is said to be 
+\emph on
+diagish
+\emph default
+ if it has the form 
+\begin_inset Formula $A=\mathrm{diag}\left(e_{1},\ldots,e_{n}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+An expression 
+\begin_inset Formula $\mathrm{diag}\left(e_{1},\ldots,e_{n}\right)$
+\end_inset
+
+ is
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\emph on
+nullary 
+\emph default
+if 
+\begin_inset Formula $n=0$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+scalar-normal
+\emph default
+ if 
+\begin_inset Formula $n=1$
+\end_inset
+
+ and 
+\begin_inset Formula $e_{1}\in\mathbb{R}_{0}$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+vector-normal
+\emph default
+ if 
+\begin_inset Formula $n=1$
+\end_inset
+
+, 
+\begin_inset Formula $e_{1}\in\mathbb{R}_{1}$
+\end_inset
+
+, and if 
+\begin_inset Formula $e_{1}$
+\end_inset
+
+ is veckish it is in normal form and has at least two arguments;
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+sv-normal
+\emph default
+ if it is scalar-normal or vector-normal;
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+array-normal
+\emph default
+ if 
+\begin_inset Formula $n=1$
+\end_inset
+
+ and 
+\begin_inset Formula $e_{1}\in\mathbb{R}_{3}$
+\end_inset
+
+; and
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+unary-normal
+\emph default
+ if it is either scalar-normal, vector-normal, or array-normal.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+An expression 
+\begin_inset Formula $A=\mathrm{diag}\left(e_{1},\ldots,e_{n}\right)$
+\end_inset
+
+ is 
+\emph on
+quasi-block-normal
+\emph default
+ if
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+all 
+\begin_inset Formula $e_{i}\in\mathbb{R}_{2}$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Itemize
+any diagish 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ is unary-normal, and
+\end_layout
+
+\begin_layout Itemize
+no two consecutive 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ are sv-normal diagish expressions.
+\end_layout
+
+\end_deeper
+\begin_layout Definition*
+\begin_inset Formula $A$
+\end_inset
+
+ is 
+\emph on
+block-normal
+\emph default
+ if it is both quasi-block-normal and 
+\begin_inset Formula $n>1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+A diagish expression is in 
+\emph on
+normal form
+\emph default
+ if it is either nullary, unary-normal, or block-normal.
+\end_layout
+
+\begin_layout Section
+Quasi-normal triples
+\end_layout
+
+\begin_layout Standard
+The simplification algorithm for diagish expressions is based on the idea
+ of a 
+\emph on
+quasi-normal triple
+\emph default
+, which is used to scan through the arguments of a diagish expression to
+ build a new, equivalent expression that is in normal form.
+\end_layout
+
+\begin_layout Definition*
+An expression 
+\begin_inset Formula $\mathrm{diag}\left(x_{1},\ldots,x_{n}\right)$
+\end_inset
+
+ is 
+\emph on
+vector-initial
+\emph default
+ if 
+\begin_inset Formula $n\geq1$
+\end_inset
+
+ and either 
+\begin_inset Formula $x_{1}\in\mathbb{R}_{0}$
+\end_inset
+
+, 
+\begin_inset Formula $x_{1}\in\mathbb{R}_{1}$
+\end_inset
+
+, or 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ is a vector-initial diagish expression.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+An expression 
+\begin_inset Formula $\mathrm{diag}\left(x_{1},\ldots,x_{n}\right)$
+\end_inset
+
+ is 
+\emph on
+vector-final
+\emph default
+ if 
+\begin_inset Formula $n\geq1$
+\end_inset
+
+ and either 
+\begin_inset Formula $x_{n}\in\mathbb{R}_{0}$
+\end_inset
+
+, 
+\begin_inset Formula $x_{n}\in\mathbb{R}_{1}$
+\end_inset
+
+, or 
+\begin_inset Formula $x_{n}$
+\end_inset
+
+ is a vector-final diagish expression.
+\end_layout
+
+\begin_layout Proposition*
+If 
+\begin_inset Formula $n>0$
+\end_inset
+
+ and 
+\begin_inset Formula $u=\mathrm{diag}\left(x_{1},\ldots,x_{n}\right)$
+\end_inset
+
+ is quasi-block-normal then 
+\begin_inset Formula $u$
+\end_inset
+
+ is vector-final iff 
+\begin_inset Formula $x_{n}$
+\end_inset
+
+ is sv-normal.
+\end_layout
+
+\begin_layout Definition*
+A 
+\emph on
+quasi-normal triple
+\emph default
+ is a triple of diagish expressions 
+\begin_inset Formula $\left(A,B,C\right)$
+\end_inset
+
+ such that
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $A$
+\end_inset
+
+ is quasi-block-normal,
+\end_layout
+
+\begin_layout Itemize
+all arguments of 
+\begin_inset Formula $B$
+\end_inset
+
+ are scalars or vectors,
+\end_layout
+
+\begin_layout Itemize
+if 
+\begin_inset Formula $A$
+\end_inset
+
+ is vector-final then 
+\begin_inset Formula $B$
+\end_inset
+
+ is nullary and 
+\begin_inset Formula $C$
+\end_inset
+
+ is not vector-initial.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+You can think of 
+\begin_inset Formula $A$
+\end_inset
+
+ as the result arguments we have already produced, 
+\begin_inset Formula $B$
+\end_inset
+
+ as an (eventually) sv-normal result argument we are in the process of construct
+ing, and 
+\begin_inset Formula $C$
+\end_inset
+
+ as the arguments we have not yet processed.
+\end_layout
+
+\begin_layout Definition*
+Two quasi-normal triples 
+\begin_inset Formula $a=\left(A,B,C\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $b=\left(A',B',C'\right)$
+\end_inset
+
+ are 
+\emph on
+equivalent
+\emph default
+, written 
+\begin_inset Formula $a\equiv b$
+\end_inset
+
+, if 
+\begin_inset Formula 
+\[
+A\bullet B\bullet C=A'\bullet B'\bullet C'.
+\]
+
+\end_inset
+
+Similarly, quasi-normal triple 
+\begin_inset Formula $\left(A,B,C\right)$
+\end_inset
+
+ is equivalent to expression 
+\begin_inset Formula $e$
+\end_inset
+
+ if 
+\begin_inset Formula $e=A\bullet B\bullet C$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In order to show that our algorithm terminates, we'll need to show that
+ some 
+\begin_inset Quotes eld
+\end_inset
+
+size
+\begin_inset Quotes erd
+\end_inset
+
+ metric decreases at each iteration.
+\end_layout
+
+\begin_layout Definition*
+The 
+\emph on
+diag-size
+\emph default
+ of an expression is defined by 
+\begin_inset Formula 
+\begin{align*}
+\mathrm{dsize}(e) & =1\quad\mbox{if }e\mbox{ is not diagish}\\
+\mathrm{dsize}\left(\mathrm{diag}\left(x_{1},\ldots,x_{n}\right)\right) & =1+\sum_{i=1}^{n}\mathrm{dsize}\left(x_{1}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+The 
+\emph on
+QNT-size 
+\emph default
+of a quasi-normal triple is defined by 
+\begin_inset Formula 
+\[
+\mathrm{qntsize}(A,B,C)=2\cdot\mathrm{dsize}(C)+\begin{cases}
+0 & \mbox{if }B\mbox{ is nullary}\\
+1 & \mbox{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+\begin_inset Formula $a\rightarrowtail b$
+\end_inset
+
+ (
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $a$
+\end_inset
+
+ reduces to 
+\begin_inset Formula $b$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+) means that
+\emph on
+ 
+\emph default
+if 
+\begin_inset Formula $a$
+\end_inset
+
+ is a quasi-normal triple, then 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $b$
+\end_inset
+
+ is a quasi-normal triple,
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $b\equiv a$
+\end_inset
+
+, and
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\mathrm{qntsize}(b)<\mathrm{qntsize}(a)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Our algorithm works by successively reducing a quasi-normal triple until
+ no further reduction is possible.
+ We make use of the algorithm for simplifying veckish expression.
+\end_layout
+
+\begin_layout Definition*
+If 
+\begin_inset Formula $e$
+\end_inset
+
+ is a veckish expression then 
+\begin_inset Formula $\mathrm{simpv}(e)$
+\end_inset
+
+ is the result of applying to 
+\begin_inset Formula $e$
+\end_inset
+
+ the algorithm described in 
+\begin_inset Quotes eld
+\end_inset
+
+Simplifying 
+\family typewriter
+vec
+\family default
+ expressions.
+\begin_inset Quotes erd
+\end_inset
+
+ (Note that 
+\begin_inset Formula $\mathrm{simpv}(e)$
+\end_inset
+
+ is in veckish normal form if it is veckish.)
+\end_layout
+
+\begin_layout Definition*
+Here are the reductions we use.
+\end_layout
+
+\begin_layout Proposition
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:reductions"
+
+\end_inset
+
+The following reduction properties hold:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:w-has-sv-first-arg"
+
+\end_inset
+
+If 
+\begin_inset Formula $y'$
+\end_inset
+
+ is a scalar or vector expression then 
+\begin_inset Formula 
+\begin{gather*}
+\left(A,\,\mathrm{diag}\left(y_{1},\ldots,y_{m}\right),\,\mathrm{diag}\left(y',x_{1},\ldots,x_{n}\right)\right)\rightarrowtail\\
+\left(A,\mathrm{diag}\left(y_{1},\ldots,y_{m},y'\right),\mathrm{diag}\left(x_{1},\ldots,x_{n}\right)\right).
+\end{gather*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:w-has-diagish-first-arg"
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula 
+\begin{gather*}
+\left(A,\,B,\,\mathrm{diag}\left(\mathrm{diag}\left(y_{1},\ldots,y_{k}\right),x_{1},\ldots,x_{n}\right)\right)\rightarrowtail\\
+\left(A,\,B,\,\mathrm{diag}\left(y_{1},\ldots,y_{k},x_{1},\ldots,x_{n}\right)\right).
+\end{gather*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:v-not-nullary"
+
+\end_inset
+
+If 
+\begin_inset Formula $n>0$
+\end_inset
+
+ and 
+\begin_inset Formula $w$
+\end_inset
+
+ does not have a scalar, vector, or diagish first argument, then
+\begin_inset Formula 
+\begin{gather*}
+\left(\mathrm{diag}\left(y_{1},\ldots,y_{m}\right),\,\mathrm{diag}\left(x_{1},\ldots,x_{n}\right),\,C\right)\rightarrowtail\\
+\left(A',\,\mathrm{diag}(),\,C\right)
+\end{gather*}
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\begin{align*}
+v & =\mathrm{simpv}\left(\mathrm{vec}\left(x_{1},\ldots,x_{n}\right)\right)\\
+A' & =\begin{cases}
+\mathrm{diag}\left(y_{1},\ldots,y_{m}\right) & \mbox{if }v\mbox{ is nullary}\\
+\mathrm{diag}\left(y_{1},\ldots,y_{m},\mathrm{diag}(s)\right) & \mbox{if }v=\mathrm{vec}(s)\\
+\mathrm{diag}\left(y_{1},\ldots,y_{m},\mathrm{diag}(v)\right) & \mbox{otherwise}
+\end{cases}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:number-of-reductions"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:v-nullary"
+
+\end_inset
+
+If 
+\begin_inset Formula $y$
+\end_inset
+
+ is neither scalar nor vector nor diagish, then
+\begin_inset Formula 
+\begin{gather*}
+\left(\mathrm{diag}\left(y_{1},\ldots,y_{m}\right),\,\mathrm{diag}(),\,\mathrm{diag}\left(y,x_{1},\ldots,x_{n}\right)\right)\rightarrowtail\\
+\left(\mathrm{diag}\left(v_{1},\ldots,v_{m},y'\right),\,\mathrm{diag}(),\,\mathrm{diag}\left(x_{1},\ldots,x_{n}\right)\right)
+\end{gather*}
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+y'=\begin{cases}
+y & \mbox{if }y\in\mathbb{R}_{2}\\
+\mathrm{diag}(y) & \mbox{if }y\in\mathbb{R}_{3}
+\end{cases}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+We'll need to show that, on termination, we have a normal-form expression
+ equivalent to the original.
+ We'll use the following.
+\end_layout
+
+\begin_layout Proposition
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:termination"
+
+\end_inset
+
+If 
+\begin_inset Formula $(A,B,C)$
+\end_inset
+
+ is a quasi-normal triple that does not match any of reductions 1–
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:number-of-reductions"
+
+\end_inset
+
+, then both 
+\begin_inset Formula $B$
+\end_inset
+
+ and 
+\begin_inset Formula $C$
+\end_inset
+
+ are nullary, hence 
+\begin_inset Formula $\left(A,B,C\right)\equiv A$
+\end_inset
+
+.
+ Furthermore,
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+if 
+\begin_inset Formula $A$
+\end_inset
+
+ has exactly one argument 
+\begin_inset Formula $x$
+\end_inset
+
+, so that 
+\begin_inset Formula $A=\mathrm{diag}\left(x\right)$
+\end_inset
+
+, then 
+\begin_inset Formula $x$
+\end_inset
+
+ is a matrix expression that either is not diagish or is in normal form;
+\end_layout
+
+\begin_layout Itemize
+otherwise 
+\begin_inset Formula $A$
+\end_inset
+
+ is in normal form.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+As follows:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $C$
+\end_inset
+
+ does not have a scalar or vector first argument (no match with reduction
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:w-has-sv-first-arg"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $C$
+\end_inset
+
+ does not have a diagish first argument (no match with reduction 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:w-has-diagish-first-arg"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $B$
+\end_inset
+
+ is nullary (no match with reduction 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:v-not-nullary"
+
+\end_inset
+
+, and 
+\begin_inset Formula $C$
+\end_inset
+
+ has no scalar, vector, or diagish first argument).
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $C$
+\end_inset
+
+ is nullary (no match with reduction 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:v-nullary"
+
+\end_inset
+
+, 
+\begin_inset Formula $B$
+\end_inset
+
+ is nullary, 
+\begin_inset Formula $C$
+\end_inset
+
+ has no scalar, vector, or diagish first argument).
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $A$
+\end_inset
+
+ is nullary, then it is by definition in normal form.
+ If 
+\begin_inset Formula $A$
+\end_inset
+
+ has exactly one argument 
+\begin_inset Formula $x$
+\end_inset
+
+, then since 
+\begin_inset Formula $A$
+\end_inset
+
+ is quasi-block-normal, 
+\begin_inset Formula $x$
+\end_inset
+
+ is a matrix expression that either is not diagish or is unary-normal; in
+ the latter case 
+\begin_inset Formula $x$
+\end_inset
+
+ is by definition in normal form.
+ If 
+\begin_inset Formula $u$
+\end_inset
+
+ has more than one argument then it is block-normal, and hence in normal
+ form.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Algorithm for simplifying diagish expressions
+\end_layout
+
+\begin_layout Standard
+Here is the algorithm:
+\end_layout
+
+\begin_layout Itemize
+Input: a diagish expression 
+\begin_inset Formula $e$
+\end_inset
+
+, all of whose arguments are either scalars, vectors, matrices, or 3D arrays.
+\end_layout
+
+\begin_layout Itemize
+Output: an expression 
+\begin_inset Formula $e'$
+\end_inset
+
+ equivalent to 
+\begin_inset Formula $e$
+\end_inset
+
+ which, if diagish, is in normal form.
+\end_layout
+
+\begin_layout Itemize
+Pseudocode:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+\begin_inset Formula $A$
+\end_inset
+
+ := diag(); 
+\begin_inset Formula $B$
+\end_inset
+
+ := diag(); 
+\begin_inset Formula $C$
+\end_inset
+
+ := 
+\begin_inset Formula $e$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout LyX-Code
+while 
+\begin_inset Formula $\left(A,B,C\right)$
+\end_inset
+
+ matches any of reductions 1--
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:number-of-reductions"
+
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+apply a matching reduction;
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+if 
+\begin_inset Formula $A$
+\end_inset
+
+ has exactly one argument:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+return that argument;
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+else:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+return 
+\begin_inset Formula $A$
+\end_inset
+
+;
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+From Proposition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:reductions"
+
+\end_inset
+
+ we have that 
+\begin_inset Formula $\left(A,B,C\right)\equiv e$
+\end_inset
+
+ is an invariant of the while loop, and 
+\begin_inset Formula $\mathrm{qntsize}\left(A,B,C\right)$
+\end_inset
+
+ decreases at each iteration.
+ Since 
+\begin_inset Formula $\mathrm{qntsize}\left(A,B,C\right)$
+\end_inset
+
+ is by definition a positive integer, it cannot decrease indefinitely, so
+ the loop terminates.
+ Proposition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:termination"
+
+\end_inset
+
+ then tells us that the returned value is equivalent to 
+\begin_inset Formula $e$
+\end_inset
+
+ and, if diagish, is in normal form.
+\end_layout
+
+\end_body
+\end_document

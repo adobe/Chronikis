@@ -1,0 +1,10 @@
+def main(sigma_q_scale, sigma_h_scale: real{0.0,},
+         mu_a: real, sigma_a: real{0.0,},
+	 rho_mean: real{0.0,1.0}, sigma_p_scale: real{0.0,})
+  =
+  sigma_q ~ half_cauchy(sigma_q_scale);
+  sigma_h ~ half_normal(sigma_h_scale);
+  rho ~ exponential_mt(rho_mean, 1.0);
+  sigma_p ~ half_normal(sigma_p_scale);
+  accum(wn(sigma_q), mu_a, sigma_a) + wn(sigma_h)
+  + qp(7.0, 0.7, 6, rho, sigma_p)
