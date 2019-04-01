@@ -1,4 +1,3 @@
-# ![Chronikis](./img/xronikis-logo.jpeg)
 
 Chronikis (kroh-NEE-kees) is a special-purpose language for creating time-series models. It comes with a compiler
 `chronikisc` and an R package `chronikis` that contains utilities for calling the compiler as well as estimating and
