@@ -10,6 +10,11 @@ Start by filing an issue. The existing committers on this project work to reach
 consensus around project direction and issue solutions within issue threads
 (when appropriate).
 
+## Code Of Conduct
+
+This project adheres to the Adobe [code of conduct](../CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to
+[Grp-opensourceoffice@adobe.com](mailto:Grp-opensourceoffice@adobe.com).
+
 ## Contributor License Agreement
 
 All third-party contributions to this project must be accompanied by a signed contributor
