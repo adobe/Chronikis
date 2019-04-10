@@ -536,7 +536,7 @@ ysmooth <- average_normals(s$means, s$stddevs, 0.1, TRUE)
 \end_layout
 
 \begin_layout LyX-Code
-res <- lapply(filtered, residuals, type='raw', sd=FALSE)
+res <- lapply(filtered0, residuals, type='raw', sd=FALSE)
 \end_layout
 
 \begin_layout LyX-Code
