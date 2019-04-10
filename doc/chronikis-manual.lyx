@@ -361,15 +361,20 @@ Using Chronikis with R
 \end_layout
 
 \begin_layout Standard
-Here is what the process of compiling and running a model generally looks
- like.
- In the following, 
-\family typewriter
-ytrain
-\family default
- is the time series on which to train the model.
- The following assumes that you have written a Chronikis program and saved
- it to 
+In the following, suppose that
+\end_layout
+
+\begin_layout Itemize
+you have written a Chronikis program that begins with the line
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+def main(q_scale, h_scale: real{0.0, }) = 
+\end_layout
+
+\begin_layout Standard
+and saved it to 
 \begin_inset Quotes eld
 \end_inset
 
@@ -381,7 +386,33 @@ my_model.cks
 \begin_inset Quotes erd
 \end_inset
 
+;
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+ytrain
+\family default
+ is the time series on which you will train the model, and for which you
+ will forecast new values; and
+\end_layout
+
+\begin_layout Itemize
+you want to use values of 50 and 10 (resp.) for model parameters 
+\family typewriter
+q_scale 
+\family default
+and 
+\family typewriter
+h_scale
+\family default
 .
+\end_layout
+
+\begin_layout Standard
+Here is what the process of compiling and running the model then looks like:
 \end_layout
 
 \begin_layout LyX-Code
@@ -413,27 +444,7 @@ source("my_model.R")  # file was created by cksCompile
 \end_layout
 
 \begin_layout LyX-Code
-margs <- mdlArgs(
-\emph on
-model
-\emph default
-, 
-\emph on
-arguments
-\emph default
-, 
-\emph on
-go
-\emph default
-, 
-\emph on
-here
-\emph default
-, 
-\emph on
-...
-\emph default
-)
+margs <- mdlArgs(q_scale=50, h_scale=10)
 \end_layout
 
 \begin_layout LyX-Code
