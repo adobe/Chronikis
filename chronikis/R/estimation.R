@@ -23,7 +23,7 @@ runSSMcreation <- function(fpathCKS, fpathStan, fpathR, fctNameR) {
   if (!missing(fctNameR))
     args <- c(args, "--rfct", fctNameR)
 
-  res <- system2("ssm-creation-exe", args=args, stdin=fpathCKS, stdout=TRUE, stderr=TRUE)
+  res <- system2("chronikisc", args=args, stdin=fpathCKS, stdout=TRUE, stderr=TRUE)
   exit_code <- attr(res, "status")
 
   if (length(res) != 0) {
