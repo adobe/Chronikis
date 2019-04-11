@@ -6,6 +6,9 @@
 \usage{
 num_draws(postSample)
 }
+\arguments{
+\item{postSample}{A posterior sample returned by \code{posterior_sample()}.}
+}
 \description{
 Number of draws in posterior sample
 }

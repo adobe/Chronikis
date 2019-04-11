@@ -17,6 +17,8 @@
 #' of the resulting matrix.
 #' Utility function used by generated R code.
 #' @export
+#' @param arr A three-dimensional array that is treated as a list of matrices.
+#'   \code{arr[i,,]} is matrix \code{i} in the list.
 bdiag_from_arr3 <- function(arr) {
   dlm::bdiag(lapply(1:dim(arr)[1], function(i)arr[i, , ]))
 }
@@ -24,10 +26,12 @@ bdiag_from_arr3 <- function(arr) {
 #' Create a diagonal matrix from its diagonal.
 #' Utility function used by generated R code.
 #' @export
+#' @param v The desired diagonal vector
 diagv <- function(v) { diag(v, nrow=length(v)) }
 
 #' Number of draws in posterior sample
 #' @export
+#' @param postSample A posterior sample returned by \code{posterior_sample()}.
 num_draws <- function(postSample) {
   postSample$ndraws
 }
@@ -40,6 +44,8 @@ polynomial <- function(x, coeffs) {
 #' Rate parameter for exponential distribution truncated to [0,1] with given mean.
 #' Utility function used by generated R code.
 #' @export
+#' @param normalized_mean This is \eqn{\mu/u}, where \eqn{\mu} is the desired mean and
+#'   \eqn{u} is the upper bound for the truncated exponential distribution.
 exponential_mt_rate <- function(normalized_mean) {
   # Copied from Stan code, with minimal modification
   if (normalized_mean <= 0) {

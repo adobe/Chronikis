@@ -10,10 +10,10 @@ cksCompile(fpathCKS, fctNameR)
 \item{fpathCKS}{Path to Chronikis source file.}
 
 \item{fctNameR}{(Optional) Name of R SSM-creation function to generate.
- Defaults to basename of sourcefile with .cks extension removed, prefixed
- with "createSSMs_". In all cases, if the result is not a valid R name
- then it is converted to one in the same way as the `R` function
-`make.names`.}
+Defaults to basename of sourcefile with .cks extension removed, prefixed
+with "createSSMs_". In all cases, if the result is not a valid R name
+then it is converted to one in the same way as the \code{R} function
+\code{make.names}.}
 }
 \value{
 \code{stanmodel} object obtained by compiling the Chronikis program

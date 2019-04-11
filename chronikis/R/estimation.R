@@ -42,8 +42,8 @@ runSSMcreation <- function(fpathCKS, fpathStan, fpathR, fctNameR) {
 #' @param fctNameR (Optional) Name of R SSM-creation function to generate.
 #'   Defaults to basename of sourcefile with .cks extension removed, prefixed
 #'   with "createSSMs_". In all cases, if the result is not a valid R name
-#'   then it is converted to one in the same way as the `R` function
-#'  `make.names`.
+#'   then it is converted to one in the same way as the \code{R} function
+#'   \code{make.names}.
 #' @return \code{stanmodel} object obtained by compiling the Chronikis program
 #'   to Stan and then running the Stan compiiler.
 #'
@@ -62,6 +62,8 @@ cksCompile <- function(fpathCKS, fctNameR) {
 #' Create arguments to pass to a Chronikis model.
 #'
 #' @export
+#' @param ... A list of named arguments of the form param_name=param_value, one
+#'   for each parameter of the Chronikis model.
 mdlArgs <- function(...) {
   args <- list(...)
   names(args) <- paste0(names(args), "_")
@@ -71,13 +73,20 @@ mdlArgs <- function(...) {
 #' Add model arguments to compiled model
 #'
 #' @export
+#' @param stanmodel Object returned by one of the \code{_estimate} functions
+#' @param args Object created using \code{mdlArgs()}, containing the known parameter
+#'   settings for the model.
 setArgs <- function(stanmodel, args) {
   stopifnot('stanmodel' %in% class(stanmodel))
   list(stanmodel=stanmodel, args=args)
 }
 
+#' Combine setArgs and mdlArgs into a single call.
+#'
 #' @export
-setArgsList <- function(standmodel, ...) {
+#' @param stanmodel Object returned by one of the \code{_estimate} functions
+#' @param ... Named arguments param_name=param_value.
+setArgsList <- function(stanmodel, ...) {
   setArgs(stanmodel, mdlArgs(...))
 }
 
@@ -239,6 +248,9 @@ update_models <- function(y, models, filtered) {
 #' @param Zcomp m-column matrix, where m is length of latent state vector.
 #'   Zcomp[i, ] %*% alpha_t selects component i of the SSM at time t when
 #'   alpha_t is the latent state at time t.
+#' @param drop (defaults to \code{FALSE}) If \code{drop} is \code{TRUE} and \code{ncomp}
+#'   is 1, then drop the third dimension of the returned values
+#'   \code{means} and \code{stddevs}.
 #' @return List of two leny x nmdl x ncomp arrays \code{means} and \code{stddevs},
 #'   where leny is \code{length(y)}, nmdl is \code{length(filtered)}, and
 #'   ncomp is \code{nrow(Zcomp)}.
@@ -264,15 +276,15 @@ smoothed_components <- function(y, filtered, Zcomp, drop=FALSE) {
     state_vars[ , , k, ] <- aperm(Varr, c(1,3,2))
   }
 
-  state_means_mat <- matrix(state_means, nr=leny*nmdl, nc=nstate)
+  state_means_mat <- matrix(state_means, nrow=leny*nmdl, ncol=nstate)
   means <- array(state_means_mat %*% t(Zcomp), dim=c(leny, nmdl, ncomp))
 
-  state_vars_mat <- matrix(state_vars, nr=nstate*leny*nmdl, nc=nstate)
+  state_vars_mat <- matrix(state_vars, nrow=nstate*leny*nmdl, ncol=nstate)
   sds <- array(NA, dim=c(leny, nmdl, ncomp))
   tmp <- state_vars_mat %*% t(Zcomp)
   for (i in 1:ncomp) {
-    vars <- Zcomp[i, ] %*% matrix(tmp[,i], nr=nstate, nc=leny*nmdl)
-    sds[,,i] <- matrix(sqrt(vars), nr=leny, nc=nmdl)
+    vars <- Zcomp[i, ] %*% matrix(tmp[,i], nrow=nstate, ncol=leny*nmdl)
+    sds[,,i] <- matrix(sqrt(vars), nrow=leny, ncol=nmdl)
   }
   if (drop && ncomp == 1) {
     means <- abind::adrop(means, 3) # drop 3rd dimension only

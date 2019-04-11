@@ -14,6 +14,10 @@ smoothed_components(y, filtered, Zcomp, drop = FALSE)
 \item{Zcomp}{m-column matrix, where m is length of latent state vector.
 Zcomp[i, ] %*% alpha_t selects component i of the SSM at time t when
 alpha_t is the latent state at time t.}
+
+\item{drop}{(defaults to \code{FALSE}) If \code{drop} is \code{TRUE} and \code{ncomp}
+is 1, then drop the third dimension of the returned values
+\code{means} and \code{stddevs}.}
 }
 \value{
 List of two leny x nmdl x ncomp arrays \code{means} and \code{stddevs},

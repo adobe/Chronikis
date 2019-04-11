@@ -6,6 +6,12 @@
 \usage{
 setArgs(stanmodel, args)
 }
+\arguments{
+\item{stanmodel}{Object returned by one of the \code{_estimate} functions}
+
+\item{args}{Object created using \code{mdlArgs()}, containing the known parameter
+settings for the model.}
+}
 \description{
 Add model arguments to compiled model
 }

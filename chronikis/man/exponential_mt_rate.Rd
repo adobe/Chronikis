@@ -7,6 +7,10 @@ Utility function used by generated R code.}
 \usage{
 exponential_mt_rate(normalized_mean)
 }
+\arguments{
+\item{normalized_mean}{This is \eqn{\mu/u}, where \eqn{\mu} is the desired mean and
+\eqn{u} is the upper bound for the truncated exponential distribution.}
+}
 \description{
 Rate parameter for exponential distribution truncated to [0,1] with given mean.
 Utility function used by generated R code.

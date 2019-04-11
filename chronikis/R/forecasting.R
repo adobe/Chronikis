@@ -10,6 +10,9 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
+#' @importFrom stats pnorm qnorm
+NULL
+
 #' Draw a sample from the predictive distribution for the next \code{nsteps}
 #' time steps.
 #'
@@ -28,7 +31,7 @@ forecast_sample <- function(models, nsteps, ndraws_per_model) {
     sapply(res$newObs, function(x){x[,1]})
   })
   nd <- ndpm * length(models)
-  draws <- matrix(unlist(draws0), nr = nsteps, nc = nd)
+  draws <- matrix(unlist(draws0), nrow = nsteps, ncol = nd)
 }
 
 #' Compute predictive mean and quantiles for future time steps.
@@ -51,8 +54,8 @@ forecast_sample <- function(models, nsteps, ndraws_per_model) {
 #'  }
 forecast_intervals <- function(models, nsteps, alpha, drop=FALSE) {
   ndraws <- length(models)
-  means <- matrix(NA, nr=nsteps, nc=ndraws)
-  stddevs <- matrix(NA, nr=nsteps, nc=ndraws)
+  means <- matrix(NA, nrow=nsteps, ncol=ndraws)
+  stddevs <- matrix(NA, nrow=nsteps, ncol=ndraws)
   for (k in 1:ndraws) {
     res <- dlm::dlmForecast(models[[k]], nAhead = nsteps, sampleNew = FALSE)
     means[ , k] <- res$f[ , 1]

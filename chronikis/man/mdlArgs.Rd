@@ -6,6 +6,10 @@
 \usage{
 mdlArgs(...)
 }
+\arguments{
+\item{...}{A list of named arguments of the form param_name=param_value, one
+for each parameter of the Chronikis model.}
+}
 \description{
 Create arguments to pass to a Chronikis model.
 }

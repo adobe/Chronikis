@@ -8,6 +8,10 @@ Utility function used by generated R code.}
 \usage{
 bdiag_from_arr3(arr)
 }
+\arguments{
+\item{arr}{A three-dimensional array that is treated as a list of matrices.
+\code{arr[i,,]} is matrix \code{i} in the list.}
+}
 \description{
 Create a block diagonal matrix from a 3D array; arr[i, , ] is block i
 of the resulting matrix.

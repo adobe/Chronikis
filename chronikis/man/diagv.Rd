@@ -7,6 +7,9 @@ Utility function used by generated R code.}
 \usage{
 diagv(v)
 }
+\arguments{
+\item{v}{The desired diagonal vector}
+}
 \description{
 Create a diagonal matrix from its diagonal.
 Utility function used by generated R code.
