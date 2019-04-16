@@ -596,7 +596,7 @@ ymc <- forecast_sample(models, nsteps, ndpm)
 \end_layout
 
 \begin_layout LyX-Code
-minmc <- matrixStatts::colMins(ymc[11:20, ])
+minmc <- matrixStats::colMins(ymc[11:20, ])
 \end_layout
 
 \begin_layout LyX-Code
