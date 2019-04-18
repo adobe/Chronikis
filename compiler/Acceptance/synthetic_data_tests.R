@@ -109,7 +109,7 @@ diwperiod <- function(sigmaQ, sigmaH, rho, sigmaP, y0) {
     wn(sigmaH)
 }
 
-stan_dir <- "../ssm-creation/Acceptance/Reference"
+stan_dir <- "./Reference"
 
 test_wn <- function() {
   sigma <- 150

@@ -22,9 +22,21 @@ main = hspec spec
 
 spec :: Spec
 spec = do
+  test_regressions
   test_translateSimpleExprToR
   test_translateExprToR
   test_ssmCreationFct1
+
+test_regressions :: Spec
+test_regressions =
+  describe "retest prior bug fixes" $ do
+    it "Gets mat22 element order right" $
+      let args = [Var RType "a", Var RType "b",
+                  Var RType "c", Var RType "d"]
+      in
+      translateSimpleExprToR (Apply MatType "mat22" args) `shouldBe`
+        RApply' "matrix" [RApply "c" [RVar "a", RVar "c", RVar "b", RVar "d"]]
+                         [("nrow", rlitI 2)]
 
 test_translateSimpleExprToR :: Spec
 test_translateSimpleExprToR =
@@ -120,7 +132,7 @@ test_translateExprToR =
         , RLet "T"
           (RApply "dlm::bdiag"
            [ RApply' "matrix"
-               [RApply "c" [rlitR 1.0, rlitR 1.0, rlitR 0.0, RVar "phi_d"]]
+               [RApply "c" [rlitR 1.0, rlitR 0.0, rlitR 1.0, RVar "phi_d"]]
                [("nrow", rlitI 2)]
            , RApply "as.matrix" [RVar "phi_b"]
            ])

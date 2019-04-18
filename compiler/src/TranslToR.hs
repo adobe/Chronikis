@@ -131,7 +131,7 @@ translMap = Map.fromList
 
   , "mat22" .->
     checkTypes [[RType, RType, RType, RType]] $
-    \args-> RApply' "matrix" [RApply "c" args] [("nrow", rlitI 2)]
+    \[a,b,c,d]-> RApply' "matrix" [RApply "c" [a,c,b,d]] [("nrow", rlitI 2)]
 
   , "negate" .->
     checkTypes [[RType], [VecType], [MatType], [IType]] $ RApply "unary-"
