@@ -20,7 +20,7 @@ createSSMs_lltrw_1 <- function(data_, posterior_draws_, i_) {
   sigma_h_ <- raw_2_ * sigma_h_scale_
   Z_0_ <- c(1.0, 0.0)
   H_0_ <- sigma_h_ ^ 2L
-  T_0_ <- matrix(c(1.0, 1.0, 0.0, 1.0), nrow = 2L)
+  T_0_ <- matrix(c(1.0, 0.0, 1.0, 1.0), nrow = 2L)
   Q_0_ <- chronikis::diagv(c(sigma_qa_ ^ 2L, sigma_qd_ ^ 2L))
   a0_0_ <- c(mu_a_, mu_d_)
   P0_0_ <- chronikis::diagv(c(sigma_a_ ^ 2L, sigma_d_ ^ 2L))

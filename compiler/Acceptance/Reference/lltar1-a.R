@@ -20,7 +20,7 @@ createSSMs_lltar1.a_1 <- function(data_, posterior_draws_, i_) {
   phi_d_ <- sqrt(1.0 - rho_d_ ^ 2L)
   Z_0_ <- c(1.0, 0.0, 1.0)
   H_0_ <- sigma_h_ ^ 2L
-  T_0_ <- dlm::bdiag(matrix(c(1.0, 1.0, 0.0, phi_d_), nrow = 2L), as.matrix(phi_b_))
+  T_0_ <- dlm::bdiag(matrix(c(1.0, 0.0, 1.0, phi_d_), nrow = 2L), as.matrix(phi_b_))
   Q_0_ <- chronikis::diagv(c(0.0, (rho_d_ * sigma_d_) ^ 2L, (rho_b_ * sigma_b_) ^ 2L))
   a0_0_ <- c(mu_a_, 0.0, 0.0)
   P0_0_ <- chronikis::diagv(c(sigma_a_ ^ 2L, sigma_d_ ^ 2L, sigma_b_ ^ 2L))
