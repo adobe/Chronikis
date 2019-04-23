@@ -81,7 +81,6 @@ data ModelBody
 
 --- Disambiguation environment ---
 
---        _  -> logicError "Bad arg types for block4")
 dsMap :: Map FctName Disambig
 dsMap = Map.fromList
   [ ("*" .->
