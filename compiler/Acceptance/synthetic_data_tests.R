@@ -223,6 +223,43 @@ test_llar1_a <- function(N=100, Nfc=25, adapt_delta=0.8) {
            list(rho_mean=rho_mean, mu=mu, sigma=sigma, sigma_h_scale=sigma_h_scale))
 }
 
+test_llar1_a1 <- function(N=900, Nfc=225, adapt_delta=0.8) {
+  rho <- 0.1; rho_mean <- 0.15
+  mu <- 100; sigma <- 150
+  m <- rnorm(1, mu, sigma)
+  sigma_a <- 50; sigma_a_scale <- 90
+  sigma_h <- 15; sigma_h_scale <- 30
+  y <- llar1(rho, m, sigma_a, sigma_h)(N)
+  fit <-
+    run_test('llar1-a1', Nfc, y, adapt_delta,
+           c(rho=rho, sigma_h=sigma_h, sigma_a=sigma_a),
+           list(rho_mean=rho_mean, mu=mu, sigma=sigma, sigma_a_scale=sigma_a_scale,
+                sigma_h_scale=sigma_h_scale))
+  cat("m:", m, "\n")
+  fit
+}
+
+
+test_llar1_a2 <- function(N=900, Nfc=225, adapt_delta=0.8) {
+  sigma_h <- 15; sigma_h_scale <- 30
+  mu <- 100; sigma <- 150
+  m <- rnorm(1, mu, sigma)
+  sigma_rw <- 11; sigma_rw_scale <- 50
+  sigma_st <- 50; sigma_st_scale <- 150
+
+  rho <- sigma_rw / sigma_st
+  y <- llar1(rho, m, sigma_st, sigma_h)(N)
+  fit <-
+    run_test('llar1-a2', Nfc, y, adapt_delta,
+             c(sigma_h=sigma_h, sigma_rw=sigma_rw,
+               sigma_st_extra=sigma_st-sigma_rw),
+             list(sigma_rw_scale=sigma_rw_scale, sigma_st_scale=sigma_st_scale,
+                  mu=mu, sigma=sigma, sigma_h_scale=sigma_h_scale))
+  cat("m:", m, "\n")
+  fit
+}
+
+
 test_llar1_b <- function(N=900, Nfc=225, adapt_delta=0.8) {
   rho <- 0.2; rho_mean <- 0.15
   mu <- 100; sigmamu_a <- 40
@@ -236,6 +273,7 @@ test_llar1_b <- function(N=900, Nfc=225, adapt_delta=0.8) {
            list(rho_mean=rho_mean, mu=mu, sigma_total=sigma_total,
                 sigma_h_scale=sigma_h_scale))
   cat(sprintf("mu_a: %g\n", mu_a))
+  fit
 }
 
 test_lltar1_a <- function(N=100, Nfc=25, adapt_delta=0.9) {

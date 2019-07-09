@@ -1,0 +1,10 @@
+def main(sigma_rw_scale, sigma_st_scale: real{0.0,},
+         mu: real, sigma: real{0.0,},
+         sigma_h_scale: real{0.0,})
+  =
+  sigma_h ~ half_normal(sigma_h_scale);
+  sigma_rw ~ half_normal(sigma_rw_scale);
+  sigma_st_extra ~ half_normal(sigma_st_scale);
+  sigma_st = sigma_rw + sigma_st_extra;
+  phi = sqrt(1.0 - (sigma_rw / sigma_st)^2);
+  ar1(phi, sigma_rw, sigma_st) + constp(mu, sigma) + wn(sigma_h)

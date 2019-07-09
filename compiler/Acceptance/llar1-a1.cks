@@ -1,0 +1,9 @@
+def main(rho_mean: real{0.0, 1.0}, sigma_a_scale: real{0.0,},
+         mu: real, sigma: real{0.0,},
+         sigma_h_scale: real{0.0,})
+  =
+  sigma_h ~ half_normal(sigma_h_scale);
+  sigma_a ~ half_normal(sigma_a_scale);
+  rho ~ exponential_mt(rho_mean, 1.0);
+  phi = sqrt(1.0 - rho^2);
+  ar1(phi, rho * sigma_a, sigma_a) + constp(mu, sigma) + wn(sigma_h)
