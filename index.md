@@ -9,6 +9,7 @@ The name "Chronikis" is derived from the phrase **χρονική σειρά** (c
 ## Resources
 
 * Chronikis 0.2 [Manual](./docs/chronikis-manual-0.2.pdf).
+* [Quick-start docker image](./docker.html) with Jupyter notebook.
 * [Powerpoint deck](./docs/Chronikis_Presentation_190206.pptx) for talk on Chronikis given February 2019.
 * Slides for lectures on linear state-space models.
     * [Lecture 1](./docs/ssm-lecture-1.pdf): Introduction to SSMs
