@@ -2,7 +2,7 @@
 
 Since Chronikis installation is still rather involved, we have created a Docker image that has RStan, Chronikis, and Jupyter notebook installed, along with an "Example" subdirectory containing an example notebook, Chronikis model, and data:
  
-[docker image](https://cloud.docker.com/u/adobe/repository/docker/adobe/chronikis)
+[https://cloud.docker.com/u/adobe/repository/docker/adobe/chronikis](https://cloud.docker.com/u/adobe/repository/docker/adobe/chronikis)
  
 To run the notebook:
 1. Install [Docker](https://www.docker.com/).
