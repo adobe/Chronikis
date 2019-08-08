@@ -1,7 +1,7 @@
 Package: chronikis
 Type: Package
 Title: R Interface to Chronikis Time-series Modeling Language
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: person(given=c("Kevin", "S."), family="Van Horn",
                   email="vanhorn@adobe.com", role=c("aut","cre"))
 Description: Provides support for using the Chronikis time-series modeling language from R.

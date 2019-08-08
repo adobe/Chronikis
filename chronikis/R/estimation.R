@@ -31,7 +31,7 @@ runSSMcreation <- function(fpathCKS, fpathStan, fpathR, fctNameR) {
       cat(s, "\n")
   }
   if (!is.null(exit_code) && exit_code != 0)
-    stop("Failed running ssm-creation-exe, exit code ", exit_code)
+    stop("Failed running chronikisc, exit code ", exit_code)
   as.character(res)
 }
 
@@ -66,7 +66,8 @@ cksCompile <- function(fpathCKS, fctNameR) {
 #'   for each parameter of the Chronikis model.
 mdlArgs <- function(...) {
   args <- list(...)
-  names(args) <- paste0(names(args), "_")
+  if (length(args) > 0)
+    names(args) <- paste0(names(args), "_")
   args
 }
 

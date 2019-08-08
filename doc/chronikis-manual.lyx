@@ -2789,7 +2789,11 @@ div
 \end_inset
 
 It is required that 
-\begin_inset Formula $b\neq0$
+\begin_inset Formula $a\geq0$
+\end_inset
+
+ and 
+\begin_inset Formula $b>0$
 \end_inset
 
  in the expression 
@@ -2797,7 +2801,6 @@ It is required that
 \end_inset
 
 .
- Rounds down for nonnegative arguments.
 \end_layout
 
 \end_deeper

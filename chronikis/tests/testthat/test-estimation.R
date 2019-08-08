@@ -23,6 +23,12 @@ test_that("NROW gets length along first dimension", {
   expect_equal(NROW(array(1:24, dim=c(2,3,4))), 2)
 })
 
+test_that("mdlArgs works", {
+  expect_equal(mdlArgs(), list())
+  expect_equal(mdlArgs(a=3), list(a_=3))
+  expect_equal(mdlArgs(b=4, c=5), list(b_=4, c_=5))
+})
+
 test_that("Full estimation process succeeds", {
   skip_if(omit_test_estimation)
   testdir <- tempfile()
