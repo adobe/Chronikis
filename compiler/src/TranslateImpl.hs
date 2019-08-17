@@ -177,6 +177,7 @@ fct_translation_map = Map.fromList
   , "div" .-> Apply "/"
   , "exponential_mt_rate" .-> Apply "exponential_mt_rate"
   , "i2r" .-> Apply "+" . (litR 0.0 :)
+  , "log" .-> Apply "log"
   , "mat11" .-> mat11 . head
   , "mat22" .-> mat22
   , "negate" .-> Apply "-"

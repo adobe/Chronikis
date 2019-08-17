@@ -13,6 +13,8 @@ specific language governing permissions and limitations under the License.
 module TransformsSpec (main, spec) where
 
 import Control.Monad (forM_)
+--import Data.Map.Strict (Map)
+import qualified Data.Map.Strict as Map
 import Test.Hspec
 --import Test.HUnit
 --import Text.Pretty.Simple (pPrintLightBg)
@@ -21,7 +23,7 @@ import Misc
 import NameGen
 import Number
 import AST
-import Transforms
+import TransformsImpl
 
 main :: IO ()
 main = hspec spec
@@ -32,7 +34,207 @@ spec = do
   regression_test_simplifyVec
   regression_test_simplifyDiag
   test_simplifyDiag
+  test_foldConst
+  test_substituteConstQpParams
+  test_removeUnusedDefs
 
+test_foldConst :: Spec
+test_foldConst =
+  describe "foldConst" $ do
+    let plusR x y = Apply RType "+" [x, y]
+        plusI x y = Apply IType "+" [x, y]
+        minusR x y = Apply RType "-" [x, y]
+        minusI x y = Apply IType "-" [x, y]
+        timesR x y = Apply RType "*" [x, y]
+        timesI x y = Apply IType "*" [x, y]
+        negR x = Apply RType "negate" [x]
+        negI x = Apply IType "negate" [x]
+        divR x y = Apply RType "/" [x, y]
+        divI x y = Apply IType "div" [x, y]
+        squareR x = Apply RType "square" [x]
+        powR x y = Apply RType "^" [x, y]
+        varR x = Var RType x
+        varI x = Var IType x
+    it "gives up on non-consts" $ do
+      foldConst Map.empty (varR "x") `shouldBe` Nothing
+      foldConst Map.empty (litI 3 `plusI` varI "n") `shouldBe` Nothing
+    it "gives up on functions not on the list" $ do
+      foldConst Map.empty (Apply RType "foo" [litI 1]) `shouldBe` Nothing
+    it "passes through literals" $ do
+      foldConst Map.empty (litI 3) `shouldBe` Just (IVal 3)
+      foldConst Map.empty (litR 2.5) `shouldBe` Just (RVal 2.5)
+    it "substitutes vars" $ do
+      let cmap = Map.fromList [ "n" .-> IVal 5, "x" .-> RVal 3.25 ]
+      foldConst cmap (varI "n") `shouldBe` Just (IVal 5)
+      foldConst cmap (varR "x") `shouldBe` Just (RVal 3.25)
+    it "Applies integer functions" $ do
+      let cmap = Map.empty
+      foldConst cmap (litI 1 `plusI` litI 2)
+        `shouldBe` Just (IVal 3)
+      foldConst cmap (litI 2 `timesI` litI 3)
+        `shouldBe` Just (IVal 6)
+      foldConst cmap (litI 10 `minusI` litI 3)
+        `shouldBe` Just (IVal 7)
+      foldConst cmap (negI $ litI 4)
+        `shouldBe` Just (IVal $ -4)
+      foldConst cmap (litI 7 `divI` litI 3)
+        `shouldBe` Just (IVal 2)
+    it "Applies real functions" $ do
+      let cmap = Map.empty
+      foldConst cmap (litR 1.25 `plusR` litR 1.75)
+        `shouldBe` Just (RVal 3)
+      foldConst cmap (litR 2.5 `timesR` litR 3)
+        `shouldBe` Just (RVal 7.5)
+      foldConst cmap (litR 3 `minusR` litR 1.75)
+        `shouldBe` Just (RVal 1.25)
+      foldConst cmap (negR $ litR 0.75)
+        `shouldBe` Just (RVal $ -0.75)
+      foldConst cmap (litR 3.5 `divR` litR 4)
+        `shouldBe` Nothing -- We're punting on division, because sometimes
+                           -- the result cannot be represented exactly as
+                           -- a Scientific value, and the Data.Scientific
+                           -- package throws an exception.
+      foldConst cmap (squareR $ litR $ -1.5)
+        `shouldBe` Just (RVal 2.25)
+      foldConst cmap (litR 3 `powR` litI 0) `shouldBe` Just (RVal 1.0)
+      foldConst cmap (litR 3 `powR` litI 1) `shouldBe` Just (RVal 3.0)
+      foldConst cmap (litR 5 `powR` litI 2) `shouldBe` Just (RVal 25.0)
+      foldConst cmap (litR 2 `powR` litI 3) `shouldBe` Just (RVal 8.0)
+      foldConst cmap (litR 2 `powR` litI (-3))
+        `shouldBe` Nothing -- We're punting on raising real to a
+                           -- negative integer, because sometimes the
+                           -- result cannot be represented exactly as a
+                           -- scientific value.
+      foldConst cmap (litR 3 `powR` litR 2)
+        `shouldBe` Nothing -- Scientific does not define exponentiation
+                           -- with exponenent that is Scientific
+      foldConst cmap (Apply RType "i2R" [litI 7])
+        `shouldBe` Just (RVal 7.0)
+    it "recurses into subexpressions" $ do
+      let cmap = Map.fromList
+                 ["n" .-> IVal 3, "x" .-> RVal 2.5, "y" .-> RVal (-1.75)]
+      foldConst cmap ((litI 2 `timesI` varI "n") `plusI` litI 10)
+        `shouldBe` Just (IVal 16)
+      foldConst cmap ((varR "x" `plusR` varR "y") `minusR` litR 10)
+        `shouldBe` Just (RVal (-9.25))
+      foldConst cmap ((litI 5 `timesI` varI "missing") `divI` litI 3)
+        `shouldBe` Nothing
+
+test_substituteConstQpParams :: Spec
+test_substituteConstQpParams =
+  describe "substituteConstQpParams" $ do
+    let subc = substituteConstQpParams
+    let qp = Apply TSDType "qp"
+    let varR = Var RType
+    let varI = Var IType
+    let lettsd = Let TSDType
+    
+    it "substitutes into qp" $ do
+      let templ e = lettsd "n" (litI 6) $
+                    lettsd "l" (litR 0.9) $
+                    lettsd "p" (litR 7.0) $
+                    e
+      subc (templ $ qp [varR "p", varR "l", varI "n", varR "rho", varR "sigma"])
+        `shouldBe`
+        (templ $ qp [litR 7.0, litR 0.9, litI 6, varR "rho", varR "sigma"])
+    
+    it "folds constants" $ do
+      let templ e = lettsd "dof" (Apply IType "*" [litI 2, litI 3]) $
+                    lettsd "ell" (Apply RType "+" [litR 0.5, litR 0.25]) $
+                    lettsd "per" (Apply RType "-" [litR 12, litR 3]) $
+                    e
+      subc (templ $ qp
+             [ Apply RType "+" [litR 1.5, varR "per"]
+             , Apply RType "*" [varR "ell", litR 0.5]
+             , Apply IType "-" [varI "dof", litI 1]
+             , litR 0.35, litR 5.23
+             ])
+        `shouldBe`
+        (templ $ qp [litR 10.5, litR 0.375, litI 5, litR 0.35, litR 5.23])
+    
+    it "recurses into let def body" $ do
+      let templ e =
+            lettsd "n" (litI 3) $
+            lettsd "x" (lettsd "a" (litI 1) $ lettsd "b" (litI 2) $ e) $
+            (Apply TSDType "+"
+              [ Var TSDType "x"
+              , Apply TSDType "wn" [Var RType "sigma"]
+              ])
+      subc (templ $ qp
+             [ litR 4.5, litR 0.5
+             , Apply IType "+" [varI "a", varI "b", varI "n"]
+             , varR "r", varR "s"])
+        `shouldBe`
+        (templ $ qp [litR 4.5, litR 0.5, litI 6, varR "r", varR "s"])
+    
+    it "recurses into draw def body" $ do
+      let templ e1 e2 =
+            lettsd "k" (litI 2) $
+            lettsd "a" (litR 14.3) $
+            lettsd "b" (litR 0.825) $
+            Draw TSDType "y" e1 $
+            Apply TSDType "+" [Var TSDType "y", e2]
+      subc (templ (qp [varR "a", varR "b", varI "k", varR "rho", varR "sig"])
+                  (qp [ Apply RType "+" [varR "b", litR 2.5]
+                      , Apply RType "*" [varR "a", litR 0.05]
+                      , Apply IType "-" [litI 5, varI "k"]
+                      , litR 0.1, litR 3.5
+                      ]))
+        `shouldBe`
+        (templ (qp [litR 14.3, litR 0.825, litI 2, varR "rho", varR "sig"])
+               (qp [litR 3.325, litR 0.715, litI 3, litR 0.1, litR 3.5]))
+    
+    it "recurses into function args" $ do
+      let templ e =
+            lettsd "per" (litR 25.5) $
+            lettsd "ell" (litR 0.625) $
+            lettsd "n"   (litI 15) $
+            Apply TSDType "+" [ Apply TSDType "wn" [varR "sigma"], e ]
+      subc (templ (qp [varR "per", varR "ell", varI "n", varR "rho", varR "s"]))
+        `shouldBe`
+        (templ (qp [litR 25.5, litR 0.625, litI 15, varR "rho", varR "s"]))
+
+test_removeUnusedDefs :: Spec
+test_removeUnusedDefs =
+  describe "removeUnusedDefs" $ do
+    let varR = Var RType
+    let varI = Var IType
+    let lettsd = Let TSDType
+    let drawtsd = Draw TSDType
+    
+    it "Leaves expr unchanged when all vars used" $ do
+      let e = lettsd "sigma" (litR 2.0) $
+              drawtsd "x" (Apply RDistrType "exponential" [litR 5.5]) $
+              Apply TSDType "wn" [ Apply RType "*" [varR "x", varR "sigma"] ]
+      removeUnusedDefs e `shouldBe` e
+
+    it "Removes unused let def" $ do
+      let ee = drawtsd "x" (Apply RDistrType "exponential" [litR 5.5]) $
+               Apply TSDType "wn" [ Apply RType "*" [varR "x", varR "sigma"] ]
+          e0 = lettsd "sigma" (litR 2.0) $
+               lettsd "foo" (litR 27.5) $
+               ee
+          e1 = lettsd "sigma" (litR 2.0) $
+               ee
+      removeUnusedDefs e0 `shouldBe` e1
+
+    it "Removes unused draw" $ do
+      let e0 = lettsd "sigma" (litR 2.0) $
+               drawtsd "x" (Apply RDistrType "exponential" [litR 5.5]) $
+               Apply TSDType "wn" [ varR "sigma" ]
+          e1 = lettsd "sigma" (litR 2.0) $
+               Apply TSDType "wn" [ varR "sigma" ]
+      removeUnusedDefs e0 `shouldBe` e1
+
+    it "Handles nested defs/draws correctly" $ do
+      let e0 = lettsd "x" (litR 2.0) $
+               drawtsd "y" (Var RDistrType "ydistr") $
+               e1
+          e1 = lettsd "y" (litI 12) $
+               drawtsd "x" (Var RDistrType "xdistr") $
+               Apply TSDType "foo" [varI "y", varR "x"]
+      removeUnusedDefs e0 `shouldBe` e1
+      
 test_xformFctDef :: Spec
 test_xformFctDef =
   describe "xformFctDef" $ do

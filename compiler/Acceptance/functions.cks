@@ -1,0 +1,4 @@
+// test log and ^integer
+def main(x : real{0.0,}, n : int) =
+  mu = log(x^n);
+  wn(1.0) + constp(mu, 100.0)

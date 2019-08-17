@@ -6,5 +6,8 @@ def main(sigma_q_scale, sigma_h_scale: real{0.0,},
   sigma_h ~ half_normal(sigma_h_scale);
   rho ~ exponential_mt(rho_mean, 1.0);
   sigma_p ~ half_normal(sigma_p_scale);
+  period = 7.0;
+  ell = 0.7;
+  mindof = 6;
   accum(wn(sigma_q), mu_a, sigma_a) + wn(sigma_h)
-  + qp(7.0, 0.7, 6, rho, sigma_p)
+  + qp(period, ell, mindof, rho, sigma_p)

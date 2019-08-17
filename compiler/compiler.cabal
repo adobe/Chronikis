@@ -35,7 +35,7 @@ library
                        InferShapesBoundsImpl, Misc, NameGen,
                        Number, Parser, ParseFctDef, Periodic,
                        RAST, RNames, SSM, SSMConstruction,
-                       StanAST, StanASTImpl,  Transforms,
+                       StanAST, StanASTImpl, Transforms, TransformsImpl,
                        Translate, TranslateImpl, TranslToR, Unique
   ghc-options:         -Wall -fwarn-tabs -fno-ignore-asserts
   build-depends:       base >= 4.7 && < 5

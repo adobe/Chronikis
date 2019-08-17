@@ -108,7 +108,7 @@ translMap = Map.fromList
     RApply "-"
 
   , "^" .->
-    checkTypes [[RType, IType]] $ RApply "^"
+    checkTypes [[RType, IType], [RType,RType]] $ RApply "^"
 
   , "[]" .-> bracketTranslFct
 
@@ -126,6 +126,8 @@ translMap = Map.fromList
     checkTypes [[RType]] $ RApply "chronikis::exponential_mt_rate"
 
   , "i2r" .-> checkTypes [[IType]] $ RApply "as.numeric"
+
+  , "log" .-> checkTypesUnaryReal $ RApply "log"
 
   , "mat11" .-> checkTypes [[RType]] $ RApply "as.matrix"
 

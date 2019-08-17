@@ -159,10 +159,12 @@ baseFctInfo =
     
   , ("^",
      
-      sig [RType, IType] RType,
+      sig [RType, IType] RType <>
+      sig [RType, RType] RType,
 
       FShSigs $ \(_, argts) -> case argts of
         [B.RType, B.IType] -> Just B.RType
+        [B.RType, B.RType] -> Just B.RType
         _ -> Nothing
     )
   
@@ -302,6 +304,10 @@ baseFctInfo =
       sig [RType] RDistrType,
       DShSigs $ shsig [B.RType] (B.RTypeB lo0))
 
+  , ("log",
+     unaryRealSigs,
+     FShSigs $ unaryRealShSigs)
+     
   , ("mat11",
       sig [RType] MatType,
       FShSigs $ shsig [B.RType] (B.MatType (B.litI 1) (B.litI 1)))
