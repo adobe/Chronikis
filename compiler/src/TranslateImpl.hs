@@ -157,9 +157,14 @@ fct_translation_map = Map.fromList
   [ "*" .-> app_lassoc "*"
   , "*_real_arr3" .-> Apply "scale_matrices"
   , "*_arr3_real" .-> \[a,r]->Apply "scale_matrices" [r,a]
+  , "*_vec_vec" .-> Apply ".*"
+  , "*_mat_mat" .-> Apply ".*"
   , "/" .-> Apply "/"
   , "/_real_vec" .-> Apply "./"
   , "/_real_mat" .-> Apply "./"
+  , "/_vec_vec" .-> Apply "./"
+  , "/_mat_mat" .-> Apply "./"
+  , "%" .-> app_lassoc "%"
   , "+" .-> app_lassoc "+"
   , "-" .-> Apply "-"
   , "^" .-> Apply "^"
@@ -170,14 +175,18 @@ fct_translation_map = Map.fromList
     \[a,b,c,d]-> Apply "blocks4" [mat11 a, mat1n b, matn1 c, d]
   , "blocks4_mvvr" .->
     \[a,b,c,d]-> Apply "blocks4" [a, matn1 b, mat1n c, mat11 d]
+  , "cbrt" .-> Apply "cbrt"
   , "diag_vec" .-> Apply "diag_matrix"
   , "diag_arr3" .-> Apply "block_diag"
   , "diag_mats" .-> applyArr "block_diag" mat00
   -- "diag_sqr" has been transformed away already
   , "div" .-> Apply "/"
+  , "exp" .-> Apply "exp"
+  , "expm1" .-> Apply "expm1"
   , "exponential_mt_rate" .-> Apply "exponential_mt_rate"
   , "i2r" .-> Apply "+" . (litR 0.0 :)
   , "log" .-> Apply "log"
+  , "log1p" .-> Apply "log1p"
   , "mat11" .-> mat11 . head
   , "mat22" .-> mat22
   , "negate" .-> Apply "-"

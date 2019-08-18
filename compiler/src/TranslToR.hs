@@ -87,24 +87,35 @@ translateSimpleExprToR = transl where
 translMap :: Map FctName ([Type] -> [RExpr] -> RExpr)
 translMap = Map.fromList
   [ "*" .->
-    checkTypes [[IType, IType], [RType, RType], [RType, VecType],
-                [VecType, RType], [RType, MatType], [MatType, RType],
+    checkTypes [[IType, IType], [RType, RType],
+                [VecType, VecType], [MatType, MatType],
+                [RType, VecType], [VecType, RType],
+                [RType, MatType], [MatType, RType],
                 [RType, RArrType 3], [RArrType 3, RType]] $
     RApply "*"
 
   , "/" .->
-    checkTypes [[RType, RType], [RType, VecType], [VecType, RType],
+    checkTypes [[RType, RType], [VecType, VecType], [MatType, MatType],
+                [RType, VecType],[VecType, RType],
                 [RType, MatType], [MatType, RType]] $
     RApply "/"
 
   , "+" .->
-    checkTypes [[IType, IType], [RType, RType], [RType, VecType],
-                [VecType, RType], [RType, MatType], [MatType, RType]] $
+    checkTypes [[IType, IType], [RType, RType],
+                [VecType, VecType], [MatType, MatType],
+                [RType, VecType], [VecType, RType],
+                [RType, MatType], [MatType, RType]] $
     RApply "+"
 
+  , "%" .->
+    checkTypes [[IType, IType]] $
+    RApply "%%"
+
   , "-" .->
-    checkTypes [[IType, IType], [RType, RType], [RType, VecType],
-                [VecType, RType], [RType, MatType], [MatType, RType]] $
+    checkTypes [[IType, IType], [RType, RType],
+                [VecType, VecType], [MatType, MatType],
+                [RType, VecType], [VecType, RType],
+                [RType, MatType], [MatType, RType]] $
     RApply "-"
 
   , "^" .->
@@ -116,18 +127,27 @@ translMap = Map.fromList
 
   , "blocks4" .-> blocks4TranslFct
 
+  , "cbrt" .-> checkTypesUnaryReal $
+               \[x] -> RApply "^" [x, RApply "/" [rlitR 1, rlitR 3]]
+
   , "diag" .-> diagTranslFct
 
   , "div" .-> checkTypes [[IType, IType]] $ RApply "%/%"
   -- TODO: R rounds downwards, Stan (and C++) rounds towards zero. How
   -- do we resolve this?
 
+  , "exp" .-> checkTypesUnaryReal $ RApply "exp"
+
+  , "expm1" .-> checkTypesUnaryReal $ RApply "expm1"
+  
   , "exponential_mt_rate" .->
     checkTypes [[RType]] $ RApply "chronikis::exponential_mt_rate"
 
   , "i2r" .-> checkTypes [[IType]] $ RApply "as.numeric"
 
   , "log" .-> checkTypesUnaryReal $ RApply "log"
+
+  , "log1p" .-> checkTypesUnaryReal $ RApply "log1p"
 
   , "mat11" .-> checkTypes [[RType]] $ RApply "as.matrix"
 

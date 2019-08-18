@@ -58,6 +58,8 @@ baseFctInfo =
      
       sig [IType, IType] IType <>
       sig [RType, RType] RType <>
+      sig [VecType, VecType] VecType <>
+      sig [MatType, MatType] MatType <>
       sig [RType, VecType] VecType <>
       sig [VecType, RType] VecType <>
       sig [RType, MatType] MatType <>
@@ -66,8 +68,10 @@ baseFctInfo =
       sig [RArrType 3, RType] (RArrType 3),
       
       FShSigs $ \(_, argts)-> case argts of
-        [B.IType, t@B.IType] -> Just t
-        [B.RType, t@B.RType] -> Just t
+        [t@B.IType, B.IType] -> Just t
+        [t@B.RType, B.RType] -> Just t
+        [t@(B.VecType _), B.VecType _] -> Just t
+        [t@(B.MatType _ _), B.MatType _ _] -> Just t
         [B.RType, t@(B.VecType _)] -> Just t
         [t@(B.VecType _), B.RType] -> Just t
         [B.RType, t@(B.MatType _ _)] -> Just t
@@ -88,17 +92,35 @@ baseFctInfo =
         [B.RType, t@(B.RArrType [_,_,_])] -> Just t
         _ -> Nothing
     )
+
+  , ("*_vec_vec",
+     nosigs,
+     FShSigs $ \(_, argts) -> case argts of
+        [t@(B.VecType _), B.VecType _] -> Just t
+        _ -> Nothing
+    )
+
+  , ("*_mat_mat",
+     nosigs,
+     FShSigs $ \(_, argts) -> case argts of
+        [t@(B.MatType _ _), B.MatType _ _] -> Just t
+        _ -> Nothing
+    )
     
   , ("/",
      
       sig [RType, RType] RType <>
       sig [RType, VecType] VecType <>
+      sig [VecType, VecType] VecType <>
+      sig [MatType, MatType] MatType <>
       sig [VecType, RType] VecType <>
       sig [RType, MatType] MatType <>
       sig [MatType, RType] MatType,
 
       FShSigs $ \(_, argts)-> case argts of
-        [B.RType, t@B.RType] -> Just t
+        [t@B.RType, B.RType] -> Just t
+        [t@(B.VecType _), B.VecType _] -> Just t
+        [t@(B.MatType _ _), B.MatType _ _] -> Just t
         [t@(B.VecType _), B.RType] -> Just t
         [t@(B.MatType _ _), B.RType] -> Just t
         _ -> Nothing
@@ -117,11 +139,34 @@ baseFctInfo =
         [B.RType, t@(B.MatType _ _)] -> Just t
         _ -> Nothing
     )
+
+  , ("/_vec_vec",
+     nosigs,
+     FShSigs $ \(_, argts) -> case argts of
+        [t@(B.VecType _), B.VecType _] -> Just t
+        _ -> Nothing
+    )
+
+  , ("/_mat_mat",
+     nosigs,
+     FShSigs $ \(_, argts) -> case argts of
+        [t@(B.MatType _ _), B.MatType _ _] -> Just t
+        _ -> Nothing
+    )
+    
+  , ("%",
+     sig [IType, IType] IType,
+     FShSigs $ \(_, argts) -> case argts of
+        [t@B.IType, B.IType] -> Just t
+        _ -> Nothing
+    )
     
   , ("+",
      
       sig [IType, IType] IType <>
       sig [RType, RType] RType <>
+      sig [VecType, VecType] VecType <>
+      sig [MatType, MatType] MatType <>
       sig [RType, VecType] VecType <>
       sig [VecType, RType] VecType <>
       sig [RType, MatType] MatType <>
@@ -129,8 +174,10 @@ baseFctInfo =
       sigVariableLength [TSDType] TSDType,
 
       FShSigs $ \(_, argts) -> case argts of
-        [B.IType, t@B.IType] -> Just t
-        [B.RType, t@B.RType] -> Just t
+        [t@B.IType, B.IType] -> Just t
+        [t@B.RType, B.RType] -> Just t
+        [t@(B.VecType _), B.VecType _] -> Just t
+        [t@(B.MatType _ _), B.MatType _ _] -> Just t
         [B.RType, t@(B.VecType _)] -> Just t
         [t@(B.VecType _), B.RType] -> Just t
         [B.RType, t@(B.MatType _ _)] -> Just t
@@ -142,14 +189,18 @@ baseFctInfo =
      
       sig [IType, IType] IType <>
       sig [RType, RType] RType <>
+      sig [VecType, VecType] VecType <>
+      sig [MatType, MatType] MatType <>
       sig [RType, VecType] VecType <>
       sig [VecType, RType] VecType <>
       sig [RType, MatType] MatType <>
       sig [MatType, RType] MatType,
 
       FShSigs $ \(_, argts) -> case argts of
-        [B.IType, t@B.IType] -> Just t
-        [B.RType, t@B.RType] -> Just t
+        [t@B.IType, B.IType] -> Just t
+        [t@B.RType, B.RType] -> Just t
+        [t@(B.VecType _), B.VecType _] -> Just t
+        [t@(B.MatType _ _), B.MatType _ _] -> Just t
         [B.RType, t@(B.VecType _)] -> Just t
         [t@(B.VecType _), B.RType] -> Just t
         [B.RType, t@(B.MatType _ _)] -> Just t
@@ -216,6 +267,10 @@ baseFctInfo =
           Just $ mat1sh m n
         _ -> Nothing
     )
+
+  , ("cbrt",
+      unaryRealSigs,
+      FShSigs $ unaryRealShSigs)
     
   , ("certainly",
      certainlySigs,
@@ -259,6 +314,14 @@ baseFctInfo =
   , ("div",
       sig [IType, IType] IType,
       FShSigs $ shsig [B.IType, B.IType] B.IType)
+    
+  , ("exp",
+      unaryRealSigs,
+      FShSigs $ unaryRealShSigs)
+    
+  , ("expm1",
+      unaryRealSigs,
+      FShSigs $ unaryRealShSigs)
     
   , ("i2r",
       sig [IType] RType,
@@ -308,6 +371,10 @@ baseFctInfo =
      unaryRealSigs,
      FShSigs $ unaryRealShSigs)
      
+  , ("log1p",
+      unaryRealSigs,
+      FShSigs $ unaryRealShSigs)
+    
   , ("mat11",
       sig [RType] MatType,
       FShSigs $ shsig [B.RType] (B.MatType (B.litI 1) (B.litI 1)))

@@ -149,6 +149,7 @@ rEnv = Map.fromList $
   , (":", lbinopcode (":", 3))
 
   , ("%/%", lbinopcode ("%/%", 4))
+  , ("%%", lbinopcode ("%%", 4))
   -- any other %op% operators go here with same precedence
   
   , ("*", lbinopcode ("*", 5))

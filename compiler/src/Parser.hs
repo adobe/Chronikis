@@ -179,7 +179,8 @@ opExpr = buildExpressionParser opTable term where
       , Prefix (reservedOp "+" >> return id)
       ]
     , [binary "^" AssocRight]
-    , [binary "*" AssocLeft, binary "/" AssocLeft, binary "div" AssocLeft]
+    , [binary "*" AssocLeft, binary "/" AssocLeft,
+       binary "div" AssocLeft, binary "%" AssocLeft]
     , [binary "+" AssocLeft, binary "-" AssocLeft]
     ]
   binary name assoc =

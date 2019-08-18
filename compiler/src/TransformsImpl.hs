@@ -44,7 +44,7 @@ xformFctDef xform =
 expansionXform :: ExprT -> NameGen ExprT
 expansionXform =
   (return . substituteConstQpParams) >=>
-  bottomUpXform consolidateTSDSums >=>  -- Not sure if this is necessary
+  --bottomUpXform consolidateTSDSums >=>  -- Not sure if this is necessary
   bottomUpXform xpandTop >=>
   (return . removeUnusedDefs) >=>
   bottomUpXform liftSSMargs

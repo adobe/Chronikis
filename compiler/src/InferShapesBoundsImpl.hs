@@ -86,11 +86,15 @@ dsMap = Map.fromList
   [ ("*" .->
        disamb1 [A.RArrType 3, A.RType] "*_arr3_real" <>
        disamb1 [A.RType, A.RArrType 3] "*_real_arr3" <>
+       disamb1 [A.VecType, A.VecType] "*_vec_vec" <>
+       disamb1 [A.MatType, A.MatType] "*_mat_mat" <>
        disamb_ "*")
     
   , ("/" .->
        disamb1 [A.RType, A.VecType] "/_real_vec" <>
        disamb1 [A.RType, A.MatType] "/_real_mat" <>
+       disamb1 [A.VecType, A.VecType] "/_vec_vec" <>
+       disamb1 [A.MatType, A.MatType] "/_mat_mat" <>
        disamb_ "/")
     
   , ("blocks4" .->
