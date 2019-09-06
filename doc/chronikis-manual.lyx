@@ -1432,6 +1432,8 @@ signature
 \emph default
  indicate that there is one such signature for every combination of nonnegative
  values of the variables.
+ Unary functions that take arguments of arbitrarily high dimension apply
+ the scalar function elementwise.
 \end_layout
 
 \begin_layout Itemize
@@ -1464,6 +1466,28 @@ signature
 
 \family default
 .
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $(\tvec n,\tvec n)\colon\tvec n$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Add two vectors elementwise.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $(\tmat mn,\tmat mn)\colon\tmat mn$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Add two matrices elementwise.
 \end_layout
 
 \begin_layout Itemize
@@ -1648,6 +1672,28 @@ Negate each element of a matrix.
 \end_layout
 
 \begin_layout Itemize
+\begin_inset Formula $(\tvec n,\tvec n)\colon\tvec n$
+\end_inset
+
+,
+\begin_inset Newline newline
+\end_inset
+
+Subtract one vector from another elementwise.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\tmat mn,\tmat mn\right)\colon\tmat mn$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Subtract one matrix from another elementwise.
+\end_layout
+
+\begin_layout Itemize
 
 \family typewriter
 \begin_inset Formula $(\treal,\tvec n)\colon\tvec n$
@@ -1750,6 +1796,28 @@ Subtract a scalar from each element of a matrix.
 
 \family default
 .
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\tvec n,\tvec n\right)\colon\tvec n$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Multiply two vectors elementwise.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\tmat mn,\tmat mn\right)\colon\tmat mn$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Multiply two matrices elementwise.
 \end_layout
 
 \begin_layout Itemize
@@ -1889,6 +1957,28 @@ Multiply each element of a 3D array by a scalar.
 \end_layout
 
 \begin_layout Itemize
+\begin_inset Formula $\left(\tvec n,\tvec n\right)\colon\tvec{[n}$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Divide one vector by another elementwise.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\tmat mn,\tmat mn\right)\colon\tmat mn$
+\end_inset
+
+,
+\begin_inset Newline newline
+\end_inset
+
+Divide one matrix by another elementwise.
+\end_layout
+
+\begin_layout Itemize
 
 \family typewriter
 \begin_inset Formula $(\treal,\tvec n)\colon\tvec n$
@@ -1966,6 +2056,50 @@ Divide each element of a matrix by a scalar.
 
 \end_deeper
 \begin_layout Itemize
+(
+\family typewriter
+%
+\family default
+) (binary operator).
+ Modulus.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $(\tint,\tint)\colon\tint$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $a\,\mbox{\texttt{\%}\,}b$
+\end_inset
+
+ is the remainder when dividing 
+\begin_inset Formula $a$
+\end_inset
+
+ by 
+\begin_inset Formula $b$
+\end_inset
+
+.
+ Defined only when 
+\begin_inset Formula $a\geq0$
+\end_inset
+
+ and 
+\begin_inset Formula $b>0$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 
 \family typewriter
 (^
@@ -1977,9 +2111,16 @@ Divide each element of a matrix by a scalar.
 
 \begin_deeper
 \begin_layout Itemize
+\begin_inset Formula $\left(\treal,\tint\right)\colon\treal$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
 
 \family typewriter
-\begin_inset Formula $(\treal,\tint)\colon\treal$
+\begin_inset Formula $(\treal,\treal)\colon\treal$
 \end_inset
 
 
@@ -2446,6 +2587,37 @@ C & D
 \begin_layout Itemize
 
 \family typewriter
+cbrt
+\family default
+.
+ Cube root.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $(\treal)\colon\treal$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $(\treal[n])\colon\treal[n]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+etc.
+ for higher dimensions.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
 diag
 \family default
 .
@@ -2807,6 +2979,76 @@ It is required that
 \begin_layout Itemize
 
 \family typewriter
+exp
+\family default
+.
+ Natural exponential 
+\begin_inset Formula $e^{x}$
+\end_inset
+
+.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\left(\treal\right)\colon\treal$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\tvec n\right)\colon\tvec n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+etc.
+ for higher dimensions.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+expm1
+\family default
+.
+ Natural exponential minus one 
+\begin_inset Formula $e^{x}-1$
+\end_inset
+
+.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\left(\treal\right)\colon\treal$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\tvec n\right)\colon\tvec n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+etc.
+ for higher dimensions.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
 i2r
 \family default
 .
@@ -2832,6 +3074,76 @@ real
 
 \family default
 .
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+log
+\family default
+.
+ Natural logarithm 
+\begin_inset Formula $\ln x$
+\end_inset
+
+.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\left(\treal\right)\colon\treal$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\tvec n\right)\colon\tvec n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+etc.
+ for higher dimensions.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
+log1p
+\family default
+.
+ Natural logarithm of one plus argument, 
+\begin_inset Formula $\ln\left(1+x\right)$
+\end_inset
+
+.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\left(\treal\right)\colon\treal$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\tvec n\right)\colon\tvec n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+etc.
+ for higher dimensions.
 \end_layout
 
 \end_deeper
@@ -2931,7 +3243,7 @@ negate
 sqrt
 \family default
 .
- Square-root applied element-wise.
+ Square-root.
  Signatures:
 \end_layout
 
@@ -2951,17 +3263,6 @@ sqrt
 
 \family typewriter
 \begin_inset Formula $(\tvec n)\colon\tvec n$
-\end_inset
-
-
-\family default
-.
-\end_layout
-
-\begin_layout Itemize
-
-\family typewriter
-\begin_inset Formula $(\tmat mm)\colon\tmat mn$
 \end_inset
 
 
@@ -3001,17 +3302,6 @@ square
 
 \family typewriter
 \begin_inset Formula $(\tvec n)\colon\tvec n$
-\end_inset
-
-
-\family default
-.
-\end_layout
-
-\begin_layout Itemize
-
-\family typewriter
-\begin_inset Formula $(\tmat mn)\colon\tmat mn$
 \end_inset
 
 
@@ -4016,10 +4306,45 @@ If
 \begin_layout Itemize
 
 \family typewriter
+const
+\family default
+.
+ Constant time series for known constant.
+ Signatures:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $(\treal):\tsd$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\call{const}{\mu}$
+\end_inset
+
+ is equivalent to 
+\begin_inset Formula 
+\[
+y_{t}=\mu\quad\mbox{for all }t\geq1.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\family typewriter
 constp
 \family default
 .
- Constant time series.
+ Constant time series for unknown constant.
  Signatures:
 \end_layout
 
