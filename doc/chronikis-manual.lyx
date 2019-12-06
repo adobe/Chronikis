@@ -300,7 +300,7 @@ path_to_cloned_git_repository
 \begin_inset Newline newline
 \end_inset
 
-install.packages('chronikis_0.2.0.tar.gz', repos=NULL)
+install.packages('chronikis_0.2.1.tar.gz', repos=NULL)
 \end_layout
 
 \begin_layout Enumerate
