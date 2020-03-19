@@ -296,7 +296,7 @@ smoothed_components <- function(y, filtered, Zcomp, drop=FALSE) {
 }
 
 matEqual <- function(M1, M2) {
-  is.matrix(M1) && is.matrix(M2) && dim(M1) == dim(M2) && all(M1 == M2)
+  is.matrix(M1) && is.matrix(M2) && all(dim(M1) == dim(M2)) && all(M1 == M2)
 }
 
 vapplyL <- function(...) { vapply(..., FUN.VALUE = FALSE) }

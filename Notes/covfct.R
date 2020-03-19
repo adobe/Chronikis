@@ -163,7 +163,7 @@ max_error <- function(max_order, ells) {
   return(maxerr_mat)
 }
 
-# ARG: covs is a vector of autocovariances that run from 0 to 0.5.
+# ARG: covs is a vector of autocovariances that run from distance 0 to 0.5.
 # RETURN: Amount by which we'll need to scale the autocovariances after subtracting the
 #   mean, in order for to have an autocovariance of 1 for distance n=0. 
 expansion_ratio <- function(covs) {
